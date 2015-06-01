@@ -16,7 +16,7 @@ handlers['POST /addClap'] = function(req, res) {
      res.writeHead(200, "OK", {'Content-Type': 'text/html'});
      res.end(clapList[(clapList.length)-1]);
    });
-}
+};
 
 handlers.generic = function(req, res) {
   fs.readFile(__dirname + req.url, function(err, data){
@@ -28,6 +28,6 @@ handlers.generic = function(req, res) {
           res.end(data);
       }
   });
-}
+};
 
 module.exports = handlers;
