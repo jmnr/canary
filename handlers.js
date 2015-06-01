@@ -7,23 +7,19 @@ handlers['POST /addClap'] = function(req, res) {
    });
 
    var body = '';
-
    req.on('data', function(chunk) {
       body += chunk;
    });
 
   req.on('end', function() {
-
     var entry = JSON.stringify({message: body}) + "\n";
     console.log(entry);
-
     fs.appendFile('claps.json', entry, function (err) {
       if (err) throw err;
       console.log('The "data to append" was appended to file!');
     });
-
      res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-     res.end(body);
+     res.end(entry);
    });
 };
 
