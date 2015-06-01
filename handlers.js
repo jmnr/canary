@@ -4,6 +4,7 @@ var fs = require('fs');
 
 handlers['POST /addClap'] = function(req, res) {
   if (req.body) {
+    console.log("message recieved: ", req.body);
     res.writeHead(200, {'Content-Type' : 'text'});
     clapList.push(req.data);
     res.end(clapList[clapList.length-1]);

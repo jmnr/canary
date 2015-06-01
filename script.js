@@ -1,7 +1,7 @@
 $('#submitButton').click(function() {
-  $.post( '/addClap', $("#newClapInput").val(), addClap(data));
+  $.post( '/addClap', $("#newClapInput").val(), addClap(clapData));
 });
 
-addClap = function(data) {
+addClap = function(clapData) {
   alert('posted');
 };
