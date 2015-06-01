@@ -6,3 +6,7 @@
   width: 300px;
   height: 100px;
 }
+
+.inputButtons {
+  border: 2px solid black;
+}
