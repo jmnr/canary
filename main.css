@@ -10,3 +10,13 @@
 .inputButtons {
   border: 2px solid black;
 }
+
+#claps {
+  text-align: center;
+}
+
+.clap {
+  background-color: grey;
+  height: 100px;
+  width: 300px;
+}
