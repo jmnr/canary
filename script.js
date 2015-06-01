@@ -1,12 +1,13 @@
 (function(){
   "use strict";
 
-  document.onload = function() {
+  window.onload = function() {
     $.get( '/allClaps', function(data) {
-      var claps = JSON.parse(data);
+      var obj = JSON.parse(data);
+      var claps = obj.claps;
       for(var j = 0; j < claps.length; j++) {
         $("#claps").prepend(
-          '<div class="clap">' + claps[i].message + '</div>'
+          '<div class="clap">' + claps[j].message + '</div>'
         );
       }
     });
@@ -14,9 +15,7 @@
 
   $('#submitButton').click(function() {
     $.post( '/addClap', $('#newClapInput').val(), function(data) {
-      console.log(data);
       var clapJson = JSON.parse(data);
-      console.log(clapJson);
       $("#claps").prepend(
         '<div class="clap">' + clapJson.message + '</div>'
       );

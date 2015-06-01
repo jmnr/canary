@@ -17,7 +17,6 @@ handlers['POST /addClap'] = function(req, res) {
     var entry = JSON.stringify({message: body}) + "\n";
     fs.appendFile('claps.json', entry, function (err) {
       if (err) throw err;
-      console.log('The "data to append" was appended to file!');
     });
      res.writeHead(200, "OK", {'Content-Type': 'text/html'});
      res.end(entry);
@@ -25,10 +24,10 @@ handlers['POST /addClap'] = function(req, res) {
  };
 
 handlers['GET /allClaps'] = function(req, res) {
-  var claps = fs.readFileSync(__dirname + '/claps.json');
-  console.log(claps);
-  res.end(claps);
-}
+  //not actually creating a json, we can fix it tommorow!!!
+  var claps = require(__dirname + '/claps.json');
+  res.end(JSON.stringify(claps));
+};
 
 handlers.generic = function(req, res) {
   fs.readFile(__dirname + req.url, function(err, data){
