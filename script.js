@@ -2,11 +2,13 @@
   "use strict";
 
   $('#submitButton').click(function() {
-    $.post( '/addClap', $('#newClapInput').val(), addClap(data) );
+    $.post( '/addClap', $('#newClapInput').val(), function(data) {
+      $("#claps").append(
+        '<div class="clap">' + data + '</div>'
+      );
+    });
   });
 
-  var addClap = function() {
-    
-  };
+
 
 }());
