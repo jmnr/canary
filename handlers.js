@@ -3,21 +3,19 @@ var clapList = [];
 var fs = require('fs');
 
 handlers['POST /addClap'] = function(req, res) {
-  var clapMessage;
-  console.log(req);
+
+  req.on('error', function(err) {
+   console.log('problem with request: ' + err.message);
+   });
 
   req.on('data', function(chunk) {
-     console.log("Received body data:");
-     console.log(chunk.toString());
-     clapMessage = chunk.toString();
+     clapList.push(chunk.toString());
    });
 
-   req.on('end', function() {
-     // empty 200 OK response for now
+  req.on('end', function() {
      res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-     res.end(clapMessage);
+     res.end(clapList[(clapList.length)-1]);
    });
-
 }
 
 handlers.generic = function(req, res) {
