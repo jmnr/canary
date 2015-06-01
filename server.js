@@ -16,7 +16,7 @@ http.createServer(function handle (req, res){
     if (handler) {
       handler(req, res);
     } else {
-      handlers.generic(req, rel);
+      handlers.generic(req, res);
     }
   }
 }).listen(8000);
