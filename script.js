@@ -1,7 +1,12 @@
-$('#submitButton').click(function() {
-  $.post( '/addClap', $("#newClapInput").val(), addClap(data));
-});
+(function(){
+  "use strict";
 
-addClap = function(data) {
-  alert('posted');
-};
+  $('#submitButton').click(function() {
+    $.post( '/addClap', $("#newClapInput").val(), addClap(data));
+  });
+
+  var addClap = function(data) {
+    alert('posted');
+  };
+
+}());
