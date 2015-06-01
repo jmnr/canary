@@ -1,24 +1,28 @@
 var handlers = {};
+var clapList = [];
+var fs = require('fs');
 
-handlers['POST /create'] = function(req, res) {
-
-  res.end();
+handlers['POST /addClap'] = function(req, res) {
+  if (req.body) {
+    res.writeHead(200, {'Content-Type' : 'text'});
+    clapList.push(req.data);
+    res.end(clapList[clapList.length-1]);
+  }
+  else {
+    res.end();
+  }
 }
 
-// handlers['GET /read'] = function(req, res) {
-//   // res.write('read');
-//   res.end();
-// }
-//
-// handlers['DELETE /delete'] = function(req, res) {
-//   res.write('delete');
-//   res.end();
-// }
-
 handlers.generic = function(req, res) {
-  res.write('generic');
-  //reading files - use dirname etc for index.html and js etc
-  res.end();
+  fs.readFile(__dirname + url, function(err, data){
+      if (err){
+          res.end();
+      } else {
+          var ext = url.split('.')[1];
+          res.writeHead(200, {'Content-Type' : 'text/' + ext});
+          res.end(data);
+      }
+  });
 }
 
 module.exports = handlers;
