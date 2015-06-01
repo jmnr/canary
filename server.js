@@ -12,10 +12,8 @@ http.createServer(function handle (req, res){
 
   else {
     var route = req.method + " " + req.url;
-    console.log(route);
     var handler = handlers[route];
     if (handler) {
-      console.log("calling handler");
       handler(req, res);
     } else {
       handlers.generic(req, res);
