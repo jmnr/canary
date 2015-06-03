@@ -1,4 +1,5 @@
 // var http = require('http');
+// var assert = require('assert');
 //
 // // function to read a cookie
 //
@@ -20,10 +21,10 @@
 // function checkIfCookieExists (request) {
 //   var cookiesObject = parseCookies(request);
 //   // console.log(Object.keys(cookiesObject).length);
-//   if (Object.keys(cookiesObject).length > -1) {
-//     return true;
-//   } else {
+//   if (Object.keys(cookiesObject).length === -1) {
 //     return false;
+//   } else {
+//     return true;
 //   }
 // }
 //
@@ -73,4 +74,11 @@
 //   console.log(userIdNumbers);
 //
 //   response.end('hello cookies');
-// }).listen(8000);
+//
+//   // test to make sure there is a cookie
+//
+//   console.log("# visiting the website gives user a cookie");
+//     var cookiesObject = parseCookies(request);
+//     assert.equal(Object.keys(cookiesObject).length, 1);
+//
+// }).listen(3000);
