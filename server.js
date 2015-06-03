@@ -2,7 +2,7 @@ var http = require("http");
 var handlers = require('./handlers.js');
 var fs = require('fs');
 var index = fs.readFileSync(__dirname + '/index.html');
-
+      
 http.createServer(function handle (req, res){
   if (req.url.length === 1) {
     res.writeHead(200, {"Content-Type": "text/html"});

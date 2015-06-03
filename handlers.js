@@ -5,7 +5,6 @@ handlers['POST /addClap'] = function(req, res) {
   var newClap;
   var claps = require(__dirname + '/claps.json'); //loads the array with all tweets
 
-
   req.on('error', function(err) {
     console.log('problem with request: ' + err.message);
   });
@@ -15,10 +14,11 @@ handlers['POST /addClap'] = function(req, res) {
   });
 
   req.on('end', function() {
-    var entry = {message: newClap};
-      // time: new Date().toUTCString()};
-    claps.push(entry); //adds new clap to claps array
-    // console.log("all claps:", claps);
+
+    var entry = {message: newClap, time: new Date().toUTCString()};
+    claps.push(entry); //adds new clap to claps array\
+
+
     fs.writeFile('claps.json', JSON.stringify(claps), function (err) { //rewrites the file with new tweet
       if (err) throw err;
     });
