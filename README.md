@@ -1,18 +1,19 @@
-# canary
-Creating TwitterKiller2015
 
----
+# Canary
+
+## What is Canary?
 
 [![Code Climate](https://codeclimate.com/repos/556de8356956802d2500a1d3/badges/7f0d8ea976928c1f8e0b/gpa.svg)](https://codeclimate.com/repos/556de8356956802d2500a1d3/feed)
 [![Test Coverage](https://codeclimate.com/repos/556de8356956802d2500a1d3/badges/7f0d8ea976928c1f8e0b/coverage.svg)](https://codeclimate.com/repos/556de8356956802d2500a1d3/coverage)
 
 
-
 # Week 4: build Twitter
 
-This week, you are going to build Twitter using Node.js.
+Canary is a social media networking sensation, built by four students at [Founders & Coders London](http://foundersandcoders.org/). Canary gives the aging Twitter format a make-over with Node.js and a bright new colour scheme.
 
-This is not a small task and it is possible that we won't have time to do the whole of Twitter in a week, but we are going to give it our best shot. We are going to proceed in a series of small steps.
+## Why are we building Canary?
+
+We're building Canary as a learning exercise in using Node.js for large-scale projects.
 
 ### Step 1
 + Make Create, Read and Delete (CR-D) endpoints.
@@ -37,10 +38,25 @@ Depending on how much progress you make, we may start adding some stretch steps 
 
 You will be expected to use everything that you have learnt so far. You will be testing on both the front end back ends and you will have something approaching a full set of repo badges https://github.com/dwyl/repo-badges.
 
-There will be a morning challenge each day 10-11.30am and we will be keeping it relevant.
+## How is Canary built?
 
-We are likely to add a Jigsaw day on Tuesday.
+We are following these steps to build Canary:
 
-If you cannot solve a problem and nobody near you can help, please use the projector to share your problem.
+### Step 1
+- [x] Make Create, Read and Delete (CR-D) endpoints
+- [ ] Store tweets as JSON in memory
 
-Office hours this week will be at 4.30pm each day.
+### Step 2
+- [ ] Store Tweets in the file system
+
+### Step 3
+- [ ] Use Cookies to restrict tweet deletion to the browser from which the tweet was originally created
+
+### Step 4
+- [ ] Move Tweets to Redis
+
+### Step 5
+- [ ] Deploy to Heroku
+
+### Step 6
+- [ ] Add real-time updates of tweets

@@ -31,8 +31,7 @@
     "pre-commit": "^1.0.7"
   },
   "pre-commit": [
-    "jshint",
-    "coverage"
+    "jshint"
   ],
   "engines": {
    "node": ">= 0.10"
