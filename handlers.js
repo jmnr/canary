@@ -15,7 +15,7 @@ handlers['POST /addClap'] = function(req, res) {
 
   req.on('end', function() {
     var entry = {message: newClap, time: new Date().toUTCString()};
-    claps.push(entry); //adds new clap to claps array
+    claps.push(entry); //adds new clap to claps array\
 
     fs.writeFile('claps.json', JSON.stringify(claps), function (err) { //rewrites the file with new tweet
       if (err) throw err;
