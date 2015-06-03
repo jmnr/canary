@@ -2,34 +2,35 @@ var handlers = {};
 var fs = require('fs');
 
 handlers['POST /addClap'] = function(req, res) {
+  var newClap;
+  var claps = require(__dirname + '/claps.json'); //loads the array with all tweets
+
 
   req.on('error', function(err) {
     console.log('problem with request: ' + err.message);
   });
 
-  var body = '';
-   		
   req.on('data', function(chunk) {
-    body += chunk;
+    newClap = chunk + ''; //turns clap input box buffer into text
   });
 
   req.on('end', function() {
-    console.log('body: ', body);
-    var entry = JSON.stringify({message: body}) + "\n";
-
-    fs.appendFile('claps.json', entry, function (err) {
+    var entry = {message: newClap};
+      // time: new Date().toUTCString()};
+    claps.push(entry); //adds new clap to claps array
+    // console.log("all claps:", claps);
+    fs.writeFile('claps.json', JSON.stringify(claps), function (err) { //rewrites the file with new tweet
       if (err) throw err;
     });
 
     res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-    res.end(entry);
+    res.end(JSON.stringify(entry)); //sends back new tweet for display
   });
 };
 
 handlers['GET /allClaps'] = function(req, res) {
-  //not actually creating a json, we can fix it tommorow!!!
-  var claps = require(__dirname + '/claps.json');
-  res.end(JSON.stringify(claps));
+  var clapsLoad = require(__dirname + '/claps.json');
+  res.end(JSON.stringify(clapsLoad));
 };
 
 handlers.generic = function(req, res) {
