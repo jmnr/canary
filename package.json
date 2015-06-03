@@ -1,0 +1,44 @@
+{
+  "name": "canary",
+  "version": "1.0.0",
+  "description": "Twitter v2",
+  "main": "script.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node test/test.js",
+    "coverage": "istanbul cover test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100",
+    "nocov": "node test/*.js",
+    "codeclimate": "CODECLIMATE_REPO_TOKEN=08ea06a96d84eb645b326dbfc18acc18ff04faccd655324136251a2fbba296e2 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
+    "start": "node server.js",
+    "nodemon": "nodemon ./server.js",
+    "jshint": "jshint -c .jshintrc --exclude-path .gitignore ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmnr/canary.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmnr/canary/issues"
+  },
+  "homepage": "https://github.com/jmnr/canary",
+  "devDependencies": {
+    "codeclimate-test-reporter": "0.0.4",
+    "istanbul": "^0.3.14",
+    "pre-commit": "^1.0.7"
+  },
+  "pre-commit": [
+    "jshint"
+  ],
+  "engines": {
+   "node": ">= 0.10"
+  },
+  "dependencies": {
+  "pre-commit": "^1.0.7",
+  "jshint": "^2.7.0",
+  "istanbul": "^0.3.14"
+  }
+}

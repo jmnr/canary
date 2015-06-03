@@ -8,7 +8,7 @@ http.createServer(function handle (req, res){
     res.writeHead(200, {"Content-Type": "text/html"});
     res.end(index.toString());
   }
-  
+
   else {
     var route = req.method + " " + req.url;
     var handler = handlers[route];
