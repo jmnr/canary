@@ -31,12 +31,16 @@
   };
 
   $('#submitButton').click(function() {
-    $.post( '/addClap', $('#newClapInput').val(), function(data) {
-      var newClap = JSON.parse(data);
-      $("#claps").prepend(addClap(newClap));
-    });
+    if($('#newClapInput').val().length !== 0) {
+      $.post( '/addClap', $('#newClapInput').val(), function(data) {
+        var newClap = JSON.parse(data);
+        $(addClap(newClap)).hide().prependTo("#claps").fadeIn("slow");
+      });
 
-    $('#newClapInput').val('');
+      $('#newClapInput').val('');
+    } else {
+      alert("Provide your egotistical ramblings in the text box.");
+    }
   });
 
   $('#newClapInput').keypress(function(e){

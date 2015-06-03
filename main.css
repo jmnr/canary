@@ -1,4 +1,4 @@
-* {
+#header {
   text-align: center;
 }
 
@@ -24,4 +24,5 @@
   background-color: grey;
   height: 100px;
   width: 300px;
+  margin: 0 auto;
 }
