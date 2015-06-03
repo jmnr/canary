@@ -1,10 +1,15 @@
+#header {
+  text-align: center;
+}
+
 #newClap {
   text-align: center;
 }
 
 #newClapInput {
-  width: 300px;
   height: 100px;
+  resize: none;
+  width: 300px;
 }
 
 .inputButtons {
@@ -19,4 +24,5 @@
   background-color: grey;
   height: 100px;
   width: 300px;
+  margin: 0 auto;
 }
