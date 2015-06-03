@@ -14,6 +14,7 @@ handlers['POST /addClap'] = function(req, res) {
    });
 
   req.on('end', function() {
+    console.log('body: ', body);
     var entry = JSON.stringify({message: body}) + "\n";
     fs.appendFile('claps.json', entry, function (err) {
       if (err) throw err;
