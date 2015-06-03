@@ -15,6 +15,16 @@ Shot.inject(handle['POST /addClap'], { method: 'post', url: '/', payload: 'testm
       console.log("test 2 passed");
 });
 
+// console.log("#test 5: ensure error executes in ['POST /addClap'] ");
+// var server = Http.createServer(handle['POST /addClap']);
+// Shot.inject(handle['POST /addClap'], {url: " "}, function (res) {
+//       console.log(res);
+//       assert.equal(res.payload)
+// //       console.log("test 5 passed");
+// });
+
+
+
 console.log("#test 3: handlers['GET /allClaps'] retrieves all the messages from the stored file ");
 var server = Http.createServer(handle['GET /allClaps']);
 Shot.inject(handle['GET /allClaps'], { method: 'get', url: '/'}, function (res) {
