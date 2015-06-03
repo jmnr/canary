@@ -6,9 +6,6 @@
 [![Code Climate](https://codeclimate.com/repos/556de8356956802d2500a1d3/badges/7f0d8ea976928c1f8e0b/gpa.svg)](https://codeclimate.com/repos/556de8356956802d2500a1d3/feed)
 [![Test Coverage](https://codeclimate.com/repos/556de8356956802d2500a1d3/badges/7f0d8ea976928c1f8e0b/coverage.svg)](https://codeclimate.com/repos/556de8356956802d2500a1d3/coverage)
 
-
-# Week 4: build Twitter
-
 Canary is a social media networking sensation, built by four students at [Founders & Coders London](http://foundersandcoders.org/). Canary gives the aging Twitter format a make-over with Node.js and an attractive new colour scheme.
 
 ## Why are we building Canary?
