@@ -66,19 +66,20 @@ http.createServer(function (request, response) {
   }
 
   // reading a cookie
+
   var cookies = parseCookies(request);
   console.log(cookies);
-
   checkIfCookieExists(request);
-
   console.log(userIdNumbers);
-
-  response.end('hello cookies');
 
   // test to make sure there is a cookie
 
   console.log("# visiting the website gives user a cookie");
     var cookiesObject = parseCookies(request);
     assert.equal(Object.keys(cookiesObject).length, 1);
+
+  // hello cookies
+
+  response.end('hello cookies');
 
 }).listen(3000);
