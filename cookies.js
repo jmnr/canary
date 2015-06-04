@@ -69,7 +69,7 @@ http.createServer(function (request, response) {
   if(checkIfCookieExists(request) === false) {
     console.log("writing");
     response.writeHead(200, {
-      'Set-Cookie': 'userId=' + getRandomUserId(1000, 100000),
+      'Set-Cookie': 'userId=' + getRandomUserId(100000, 999999),
       'Content-Type': 'text/plain'
     });
   }
