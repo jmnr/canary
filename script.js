@@ -5,7 +5,7 @@
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
       '<p>' + data.time + '</p>' +
-      '<button class="delButtons">' + Delete + '</button>' +
+      '<button class="delButtons">Delete</button>' +
     '</div>';
   };
 

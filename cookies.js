@@ -7,7 +7,7 @@ var assert = require('assert');
 function parseCookies (request) {
   var list = {},
   rc = request.headers.cookie;
-  console.log(rc);
+  // console.log(rc);
   if (rc === undefined) {
     list = "false";
   } else {
@@ -26,12 +26,8 @@ function parseCookies (request) {
 // function to test if there is already a userId cookie
 
 function checkIfCookieExists (request) {
-  var cookiesObject = parseCookies(request);
-  if (cookiesObject === "false") {
-    return false;
-  } else {
-    return true;
-  }
+  // console.log(request.headers.cookie, "ronan");
+  return request.headers.cookie !== undefined;
   // // console.log(Object.keys(cookiesObject).length);
   // if (Object.keys(cookiesObject).length === 0) {
   //   return false;
@@ -70,7 +66,8 @@ http.createServer(function (request, response) {
 
   // writing a cookie
 
-  if (checkIfCookieExists === false) {
+  if(checkIfCookieExists(request) === false) {
+    console.log("writing");
     response.writeHead(200, {
       'Set-Cookie': 'userId=' + getRandomUserId(1000, 100000),
       'Content-Type': 'text/plain'
@@ -80,9 +77,9 @@ http.createServer(function (request, response) {
   // reading a cookie
 
   var cookies = parseCookies(request);
-  console.log(cookies);
-  checkIfCookieExists(request);
-  console.log(userIdNumbers);
+  // console.log(cookies);
+  // checkIfCookieExists(request);
+  // console.log(userIdNumbers);
 
   // test to make sure there is a cookie
 

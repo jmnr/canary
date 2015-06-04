@@ -1,6 +1,15 @@
 var handlers = require('./handlers.js');
+var fs = require('fs');
+var index = fs.readFileSync(__dirname + '/index.html');
 
 function serverHandler (req, res){
+  if(req.headers.cookie === undefined) {
+    response.writeHead(200, {
+      'Set-Cookie': 'userId=' + getRandomUserId(1000, 100000),
+      'Content-Type': 'text/plain'
+    });
+  }
+
   if (req.url.length === 1) {
     res.writeHead(200, {"Content-Type": "text/html"});
     res.end(index.toString());
