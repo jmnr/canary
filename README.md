@@ -4,8 +4,8 @@
 ## What is Canary?
 
 [![Build Status](https://travis-ci.org/jmnr/canary.png?branch=master)](https://travis-ci.org/jmnr/canary)
-[![Code Climate](https://codeclimate.com/repos/556de8356956802d2500a1d3/badges/7f0d8ea976928c1f8e0b/gpa.svg)](https://codeclimate.com/repos/556de8356956802d2500a1d3/feed)
-[![Test Coverage](https://codeclimate.com/repos/556de8356956802d2500a1d3/badges/7f0d8ea976928c1f8e0b/coverage.svg)](https://codeclimate.com/repos/556de8356956802d2500a1d3/coverage)
+[![Code Climate](https://codeclimate.com/repos/556de8356956802d2500a1d3/badges/7f0d8ea976928c1f8e0b/gpa.svg)](https://codeclimate.com/github/jmnr/canary)
+[![Test Coverage](https://codeclimate.com/repos/556de8356956802d2500a1d3/badges/7f0d8ea976928c1f8e0b/coverage.svg)](https://codeclimate.com/github/jmnr/canary/coverage)
 [![Dependency Status](https://david-dm.org/jmnr/canary.svg)](https://david-dm.org/jmnr/canary)
 [![devDependency Status](https://david-dm.org/jmnr/canary/dev-status.svg)](https://david-dm.org/jmnr/canary#info=devDependencies)
 
