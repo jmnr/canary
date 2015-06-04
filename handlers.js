@@ -2,12 +2,12 @@ var handlers = {};
 var fs = require('fs');
 
 handlers['POST /addClap'] = function(req, res) {
-
   // req.on('error', function(err) {
   //   console.log('problem with request: ' + err.message);
   //   res.end("error");
   // });
-
+  var cookie = req.headers.cookie.split('=')[1];
+  var match;
   var newClap;
   var claps = require(__dirname + '/claps.json'); //loads the array with all tweets
 
@@ -16,7 +16,13 @@ handlers['POST /addClap'] = function(req, res) {
   });
 
   req.on('end', function() {
-    var entry = {message: newClap, time: new Date().toUTCString()};
+    match = cookie === cookie; //fix this, userId confirmation
+    var entry = {
+      message: newClap,
+      time: new Date(),
+      userId: cookie,
+      userMatch: match
+    };
     claps.push(entry); //adds new clap to claps array\
     fs.writeFile('claps.json', JSON.stringify(claps), function (err) { //rewrites the file with new tweet
       // if (err) throw err;

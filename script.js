@@ -5,7 +5,14 @@
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
       '<p>' + data.time + '</p>' +
-      '<button class="delButtons">' + Delete + '</button>' +
+    '</div>';
+  };
+
+  var addUserClap = function (data) {
+    return '<div class="clap">' +
+      '<p>' + data.message + '</p>' +
+      '<p>' + data.time + '</p>' +
+      '<button class="delButtons">Delete</button>' +
     '</div>';
   };
 
@@ -23,8 +30,11 @@
     $.get('/allClaps', function(data) {
       var claps = sortClaps(JSON.parse(data));
       var accessDOM = '';
-      for(var i = 0; i < claps.length; i++) {
-        accessDOM += addClap(claps[i]);
+      // for(var i = 0; i < claps.length; i++) {
+      //   accessDOM += addClap(claps[i]);
+      // }
+      for(var i = claps.length - 1 ; i >= 0; i--) {
+        accessDOM += addUserClap(claps[i]);
       }
 
       $("#claps").prepend(accessDOM);
@@ -35,7 +45,7 @@
     if($('#newClapInput').val().length !== 0) {
       $.post( '/addClap', $('#newClapInput').val(), function(data) {
         var newClap = JSON.parse(data);
-        $(addClap(newClap)).hide().prependTo("#claps").fadeIn("slow");
+        $(addUserClap(newClap)).hide().prependTo("#claps").fadeIn("slow");
       });
 
       $('#newClapInput').val('');
@@ -49,6 +59,10 @@
       $('#submitButton').click();
       return false; //prevents a linebreak being added 
     }
+  });
+
+  $('body').on('click','.delButtons', function() {
+    $(this).parent().fadeOut("slow", this.remove()); //remove is a callback so fade goes first
   });
 
 }());
