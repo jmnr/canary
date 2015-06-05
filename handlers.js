@@ -15,7 +15,7 @@ handlers['POST /addClap'] = function(req, res) {
   });
 
   req.on('end', function() {
-    if(newClap.indexOf("<script>") > -1 || newClap.indexOf("</script>") > -1) {
+    if(newClap.indexOf("<") > -1 || newClap.indexOf(">") > -1) {
       res.end("malicious"); // prevents script injection
       return;
     }
