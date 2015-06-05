@@ -12,8 +12,8 @@ body {
 
 #content {
   background: white;
-  margin: 50px 100px 50px;
-  padding: 50px 50px 50px;
+  margin: 50px 100px;
+  padding: 50px;
 }
 
 /*logo*/
@@ -38,6 +38,7 @@ body {
 #newClapInput {
   border: 2px solid black;
   height: 75px;
+  font-size: 14px;
   padding: 10px;
   resize: none;
   width: 400px;

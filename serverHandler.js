@@ -18,7 +18,7 @@ function getRandomUserId() {
 function serverHandler (req, res){
   if(req.headers.cookie === undefined) {
     res.writeHead(200, {
-      'Set-Cookie': 'userId=' + getRandomUserId(),
+      'Set-Cookie': 'userId=' + getRandomUserId() + "; expires=" + date.toGMTString(),
       'Content-Type': 'text/plain'
     });
   }

@@ -25,7 +25,11 @@ We followed these steps to build Canary:
 
 - [x] Make Create, Read and Delete (CR-D) endpoints
 
+CR-D endpoints have been created in our handlers.js file. Handlers include ['POST /addClap'], ['GET /allClaps'], ['GET /cookie'] and a generic handler.
+
 - [x] Store tweets as JSON in memory
+
+Claps were initially stored in a JSON file, but have since been moved to Redis.
 
 ### Step 2
 
@@ -39,7 +43,9 @@ Cookies are being handled server-side, written and read through the header of th
 
 ### Step 4
 
-- [ ] Move Tweets to Redis
+- [x] Move Tweets to Redis
+
+Claps are
 
 ### Step 5
 
