@@ -20,7 +20,7 @@ var redis = require("redis"),
     });
 
 
-    client.del("1");
+    client.lrem("");
     client.get("1", function(err, reply) {
       var id = Number(reply) + 1;
        id=id.toString();

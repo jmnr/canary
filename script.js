@@ -12,7 +12,7 @@
     if(data.message.indexOf("#") > -1) {
       data.message = hashtags(data.message);
     }
-    return '<div class="clap">' +
+    return '<div id="' + data.time + '" class="clap">' +
       '<p>' + data.message + '</p>' +
       '<p>' + new Date(Number(data.time)).toString() + '</p>' +
     '</div>';
@@ -22,9 +22,9 @@
     if(data.message.indexOf("#") > -1) {
       data.message = hashtags(data.message);
     }
-    return '<div class="clap">' +
+    return '<div id="' + data.time + '" class="clap">' +
       '<p>' + data.message + '</p>' +
-      '<p>' + new Date(data.time).toString() + '</p>' +
+      '<p>' + new Date(Number(data.time)).toString() + '</p>' +
       '<button class="delButtons">x</button>' +
     '</div>';
   };
@@ -88,7 +88,11 @@
   });
 
   $('body').on('click','.delButtons', function() {
+    var clapId = $(this).parent().attr("id");
     $(this).parent().fadeOut("slow", this.remove()); //remove is a callback so fade goes first
+    $.post('/delete', clapId, function() {
+      console.log("delete request sent");
+    });
   });
 
 }());
