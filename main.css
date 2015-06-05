@@ -72,6 +72,18 @@ body {
   word-wrap: break-word;
 }
 
+.delButtons {
+  background: white;
+  border: 1px solid #101010;
+  color: black;
+  font-size: 14px;
+}
+
+.delButtons:hover {
+  background: black;
+  color: white;
+}
+
 /*media queries*/
 
 @media (max-width: 700px) {
