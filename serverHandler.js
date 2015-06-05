@@ -1,4 +1,6 @@
-var handlers = require('./handlers.js');
+var handlers = require('./handlersRedis.js');
+var fs = require('fs');
+var index = fs.readFileSync(__dirname + '/index.html');
 
 function serverHandler (req, res){
   if (req.url.length === 1) {

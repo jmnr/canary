@@ -2,10 +2,10 @@
   "use strict";
 
   var addClap = function (data) {
-    return '<div class="clap">' +
+    return ('<div class="clap">' +
       '<p>' + data.message + '</p>' +
       '<p>' + data.time + '</p>' +
-    '</div>';
+    '</div>');
   };
 
   var sortClaps = function(claps) { //sorts claps by timestamp
@@ -19,13 +19,15 @@
   };
 
   window.onload = function() {
+    console.log("entered onload function")
     $.get('/allClaps', function(data) {
-      var claps = sortClaps(JSON.parse(data));
+      var claps = JSON.parse(data);
+      console.log("claps on the client side:", claps);
       var accessDOM = '';
       for(var i = 0; i < claps.length; i++) {
         accessDOM += addClap(claps[i]);
       }
-
+      console.log(accessDOM);
       $("#claps").prepend(accessDOM);
     });
   };
@@ -46,7 +48,7 @@
   $('#newClapInput').keypress(function(e){
     if(e.keyCode == 13) {
       $('#submitButton').click();
-      return false; //prevents a linebreak being added 
+      return false; //prevents a linebreak being added
     }
   });
 
