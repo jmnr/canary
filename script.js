@@ -24,8 +24,8 @@
     }
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
-      '<p>' + new Date(Number(data.time)).toString() + '</p>' +
-      '<button class="delButtons">Delete</button>' +
+      '<p>' + new Date(data.time).toString() + '</p>' +
+      '<button class="delButtons">x</button>' +
     '</div>';
   };
 

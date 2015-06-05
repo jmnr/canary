@@ -3,7 +3,11 @@
 }*/
 
 body {
-  background: #FFFF00;
+  background: #ffff00;
+  background-attachment: fixed;
+  background-image: url('https://dl.dropboxusercontent.com/u/297682547/Untitled%20design%20(13).png');
+  background-size: cover;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 #content {
@@ -21,26 +25,35 @@ body {
 #header > img {
   height: auto;
   max-width: 100%;
+  margin-bottom: 20px;
 }
 
 /*clap input*/
 
 #newClap {
+  margin-bottom: 30px;
   text-align: center;
 }
 
 #newClapInput {
   border: 2px solid black;
   height: 75px;
+  padding: 10px;
   resize: none;
   width: 400px;
 }
 
 .inputButtons {
   background: black;
-  border: 1px solid black;
+  border: 1px solid #101010;
   color: white;
   font-size: 14px;
+  width: 100px;
+}
+
+.inputButtons:hover {
+  background: #ffff00;
+  color: black;
 }
 
 /*claps*/
@@ -50,11 +63,25 @@ body {
 }
 
 .clap {
-  background-color: grey;
-  margin: 0 auto;
-  min-height: 100px;
-  width: 300px;
+  background-color: white;
+  border: 2px solid #101010;
+  min-height: 75px;
+  padding: 10px;
+  width: 400px;
+  margin: 20px auto;
   word-wrap: break-word;
+}
+
+.delButtons {
+  background: white;
+  border: 1px solid #101010;
+  color: black;
+  font-size: 14px;
+}
+
+.delButtons:hover {
+  background: black;
+  color: white;
 }
 
 /*media queries*/
@@ -62,13 +89,21 @@ body {
 @media (max-width: 700px) {
 
   #content {
-    margin: 5px 10px 5px;
+    margin: 10px 10px 10px;
     padding: 5px 5px 5px;
+  }
+
+  #header > img {
   }
 
   #newClapInput {
     height: 75px;
     width: 300px;
+  }
+
+  .clap {
+    min-height: 75px;
+    max-width: 300px;
   }
 
 }

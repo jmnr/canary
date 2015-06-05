@@ -41,6 +41,12 @@ handlers['GET /cookie'] = function(req, res) {
   res.end(cookie);
 };
 
+handlers['POST /delete'] = function(req, res) {
+  var cookie = req.headers.cookie.split('=')[1];
+  if(cookie === undefined) {cookie = false;}
+  res.end(cookie);
+};
+
 handlers.generic = function(req, res) {
   fs.readFile(__dirname + req.url, function(err, data){
     // if (err){
