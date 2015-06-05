@@ -15,10 +15,6 @@ handlers['POST /addClap'] = function(req, res) {
   });
 
   req.on('end', function() {
-    if(newClap.indexOf("<") > -1 || newClap.indexOf(">") > -1) {
-      res.end("malicious"); // prevents script injection
-      return;
-    }
     var entry = {
       message: newClap,
       time: new Date().getTime(),

@@ -3,6 +3,11 @@
 
   var cookie;
 
+  var hashtags = function (text) {
+    return text.replace( new RegExp(/#\w+/g),
+      function myFunction(x){return "<a href='#'>" + x + "</a>" ;});
+  };
+
   var addClap = function (data) {
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
@@ -54,6 +59,9 @@
       } else {
         $.post( '/addClap', newClapInput, function(data) {
           var newClap = JSON.parse(data);
+          if(newClap.message.indexOf("#") > -1) {
+            newClap.message = hashtags(newClap.message);
+          }
           var userIdMatch =
             cookie === newClap.userId ? $(addUserClap(newClap)) : $(addClap(newClap));
           userIdMatch.hide().prependTo("#claps").fadeIn("slow");
