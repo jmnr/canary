@@ -72,6 +72,19 @@ handlers['GET /cookie'] = function(req, res) {
   res.end(cookie);
 };
 
+handlers['POST /delete'] = function(req, res) {
+  var time;
+  req.on('data', function(chunk) {
+    time = chunk + ''; //turns clap input box buffer into text
+    console.log(time);
+  });
+
+  req.on('end', function() {
+    client.srem("tweets", -1, time);
+    res.end();
+  })
+};
+
 handlers.generic = function(req, res) {
   fs.readFile(__dirname + req.url, function(err, data){
     // if (err){
