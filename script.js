@@ -1,17 +1,19 @@
 (function(){
   "use strict";
 
+  var cookie;
+
   var addClap = function (data) {
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
-      '<p>' + data.time + '</p>' +
+      '<p>' + new Date(data.time).toString() + '</p>' +
     '</div>';
   };
 
   var addUserClap = function (data) {
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
-      '<p>' + data.time + '</p>' +
+      '<p>' + new Date(data.time).toString() + '</p>' +
       '<button class="delButtons">Delete</button>' +
     '</div>';
   };
@@ -27,6 +29,9 @@
   };
 
   window.onload = function() {
+    $.get('/cookie', function(data) {
+      cookie = data;
+    });
     $.get('/allClaps', function(data) {
       var claps = sortClaps(JSON.parse(data));
       var accessDOM = '';
@@ -34,7 +39,8 @@
       //   accessDOM += addClap(claps[i]);
       // }
       for(var i = claps.length - 1 ; i >= 0; i--) {
-        accessDOM += addUserClap(claps[i]);
+        accessDOM += cookie === claps[i].userId
+          ? addUserClap(claps[i]) : addClap(claps[i]);
       }
 
       $("#claps").prepend(accessDOM);
@@ -44,10 +50,16 @@
   $('#submitButton').click(function() {
     if($('#newClapInput').val().length !== 0) {
       $.post( '/addClap', $('#newClapInput').val(), function(data) {
-        var newClap = JSON.parse(data);
-        $(addUserClap(newClap)).hide().prependTo("#claps").fadeIn("slow");
+        if(data === "malicious") {
+          alert("Behave yourself!");
+        } else {
+          var newClap = JSON.parse(data);
+          var clapVerification = cookie === newClap.userId
+            ? $(addUserClap(newClap)) : $(addClap(newClap));
+          clapVerification.hide().prependTo("#claps").fadeIn("slow");
+        }
       });
-
+      
       $('#newClapInput').val('');
     } else {
       alert("Provide your egotistical ramblings in the text box.");
