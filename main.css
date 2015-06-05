@@ -1,20 +1,49 @@
+/** {
+  border: dotted 1px black;
+}*/
+
+body {
+  background: #FFFF00;
+}
+
+#content {
+  background: white;
+  margin: 50px 100px 50px;
+  padding: 50px 50px 50px;
+}
+
+/*logo*/
+
 #header {
   text-align: center;
 }
+
+#header > img {
+  height: auto;
+  max-width: 100%;
+}
+
+/*clap input*/
 
 #newClap {
   text-align: center;
 }
 
 #newClapInput {
-  height: 100px;
+  border: 2px solid black;
+  height: 75px;
   resize: none;
-  width: 300px;
+  width: 400px;
 }
 
 .inputButtons {
-  border: 2px solid black;
+  background: black;
+  border: 1px solid black;
+  color: white;
+  font-size: 14px;
 }
+
+/*claps*/
 
 #claps {
   text-align: center;
@@ -26,4 +55,20 @@
   min-height: 100px;
   width: 300px;
   word-wrap: break-word;
+}
+
+/*media queries*/
+
+@media (max-width: 700px) {
+
+  #content {
+    margin: 5px 10px 5px;
+    padding: 5px 5px 5px;
+  }
+
+  #newClapInput {
+    height: 75px;
+    width: 300px;
+  }
+
 }
