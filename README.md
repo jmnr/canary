@@ -25,7 +25,7 @@ We followed these steps to build Canary:
 
 - [x] Make Create, Read and Delete (CR-D) endpoints
 
-*CR-D endpoints have been created in our handlers.js file. Handlers include ['POST /addClap'], ['GET /allClaps'], ['GET /cookie'] and a generic handler.*
+*CR-D endpoints were created in our handlers.js file.*
 
 - [x] Store tweets as JSON in memory
 
@@ -51,7 +51,7 @@ We followed these steps to build Canary:
 
 - [ ] Deploy to Heroku (in progress)
 
-*Canary is hosted on Heroku, and can be found [here](http://canaryapp.herokuapp.com)
+*Canary is hosted on Heroku, and can be found [here](http://canaryapp.herokuapp.com).*
 
 ### Step 6
 
@@ -63,7 +63,7 @@ We followed these steps to build Canary:
 
 - [ ] Hash tag functionality
 
-*We hope to make it possible for Canary users to filter their claps by hash tag.*
+*We aim to make it possible for Canary users to filter their claps by hash tag.*
 
 ##How can you run Canary?
 
