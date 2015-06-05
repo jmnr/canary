@@ -13,3 +13,4 @@ hs_err_pid*
 coverage
 node_modules
 .DS_Store
+redis-stable

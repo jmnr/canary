@@ -14,7 +14,7 @@
     }
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
-      '<p>' + new Date(data.time).toString() + '</p>' +
+      '<p>' + new Date(Number(data.time)).toString() + '</p>' +
     '</div>';
   };
 
@@ -43,16 +43,15 @@
     $.get('/cookie', function(data) {
       cookie = data;
     });
-
     $.get('/allClaps', function(data) {
-      var claps = sortClaps(JSON.parse(data));
+      var claps = JSON.parse(data);
+      console.log("claps on the client side:", claps);
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
         accessDOM +=
           cookie === claps[i].userId ? addUserClap(claps[i]) : addClap(claps[i]);
       }
-
       $("#claps").prepend(accessDOM);
     });
   };
