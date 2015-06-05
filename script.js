@@ -5,10 +5,13 @@
 
   var hashtags = function (text) {
     return text.replace( new RegExp(/#\w+/g),
-      function myFunction(x){return "<a href='#'>" + x + "</a>" ;});
+      function myFunction(x){return "<a class='hashClick' href='#'>" + x + "</a>" ;});
   };
 
   var addClap = function (data) {
+    if(data.message.indexOf("#") > -1) {
+      data.message = hashtags(data.message);
+    }
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
       '<p>' + new Date(data.time).toString() + '</p>' +
@@ -16,6 +19,9 @@
   };
 
   var addUserClap = function (data) {
+    if(data.message.indexOf("#") > -1) {
+      data.message = hashtags(data.message);
+    }
     return '<div class="clap">' +
       '<p>' + data.message + '</p>' +
       '<p>' + new Date(data.time).toString() + '</p>' +
@@ -59,9 +65,6 @@
       } else {
         $.post( '/addClap', newClapInput, function(data) {
           var newClap = JSON.parse(data);
-          if(newClap.message.indexOf("#") > -1) {
-            newClap.message = hashtags(newClap.message);
-          }
           var userIdMatch =
             cookie === newClap.userId ? $(addUserClap(newClap)) : $(addClap(newClap));
           userIdMatch.hide().prependTo("#claps").fadeIn("slow");
@@ -79,6 +82,10 @@
       $('#submitButton').click();
       return false; //prevents a linebreak being added with enter key
     }
+  });
+
+  $('body').on('click','.hashClick', function() {
+    console.log($(this).text());
   });
 
   $('body').on('click','.delButtons', function() {
