@@ -17,8 +17,17 @@ handlers['POST /addClap'] = function(req, res) {
             "message": newClap,
             "time": clapTime
             };
-    client.hmset(clapTime, clapObj);
-    client.sadd("tweets", clapTime);
+    var multi = client.multi();
+    multi.get("tweetcount", function(err, reply) {
+      var id = Number(reply) + 1;
+       id=id.toString();
+        client.hmset(id, clapObj);
+      })
+    multi.incr("tweetcount");
+    multi.exec(function (err, replies) {
+            console.log("replies recieved");
+    });
+
     // console.log("####new clap:" ,clapObj);
     res.writeHead(200, "OK", {'Content-Type': 'text/html'});
     res.end(JSON.stringify(clapObj)); //sends back new tweet for display
@@ -28,43 +37,24 @@ handlers['POST /addClap'] = function(req, res) {
 
 handlers['GET /allClaps'] = function(req, res) {
   var responses = [];
-
-  client.sort("tweets", function(err, data) {
-    var tweetnumber = data.length;
-    console.log(data);
-    for (var i=(tweetnumber-1); i>=0; i--) {
-      client.hgetall(data[i], function(err, obj) {
+  client.get("tweetcount", function(err, reply) {
+    var tweetnumber = Number(reply);
+    console.log("tweetcount: ", tweetnumber);
+    for (var i = tweetnumber; i > 0; i--) {
+      console.log("i:", i);
+      client.hgetall(i, function(err, obj) {
         console.log("obj:",obj);
         responses.push(obj);
         if (responses.length === tweetnumber) {
           console.log("Responses:", responses);
           // res.end(JSON.stringify([{time: 1, userId: 1234567890, message: "hello"}]));
-          res.end(JSON.stringify(responses));
-        }
-      })
-    }
+            res.end(JSON.stringify(responses));
+          }
+        })
+      }
 
-  })
-
-  // client.get("tweetcount", function(err, reply) {
-  //   var tweetnumber = Number(reply);
-  //   console.log("tweetcount: ", tweetnumber);
-  //   for (var i = tweetnumber; i > 0; i--) {
-  //     console.log("i:", i);
-  //     client.hgetall(i, function(err, obj) {
-  //       console.log("obj:",obj);
-  //       responses.push(obj);
-  //       if (responses.length === tweetnumber) {
-  //         console.log("Responses:", responses);
-  //         // res.end(JSON.stringify([{time: 1, userId: 1234567890, message: "hello"}]));
-  //           res.end(JSON.stringify(responses));
-  //         }
-  //       })
-  //     }
-  //
-  //   })
-}
-
+    })
+  }
 
 handlers['GET /cookie'] = function(req, res) {
   var cookie = req.headers.cookie.split('=')[1];
