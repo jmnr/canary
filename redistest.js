@@ -13,7 +13,7 @@ var redis = require("redis"),
       var id = Number(reply) + 1;
        id=id.toString();
         client.hmset(id, clapObj);
-      })
+      });
     multi.incr("tweetcount");
     multi.exec(function (err, replies) {
             console.log("replies recieved");
@@ -25,7 +25,7 @@ var redis = require("redis"),
       var id = Number(reply) + 1;
        id=id.toString();
         client.hmset(id, clapObj);
-      })
+      });
 
 
 

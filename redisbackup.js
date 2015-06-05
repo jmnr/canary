@@ -22,7 +22,7 @@ handlers['POST /addClap'] = function(req, res) {
       var id = Number(reply) + 1;
        id=id.toString();
         client.hmset(id, clapObj);
-      })
+      });
     multi.incr("tweetcount");
     multi.exec(function (err, replies) {
             console.log("replies recieved");
@@ -50,11 +50,11 @@ handlers['GET /allClaps'] = function(req, res) {
           // res.end(JSON.stringify([{time: 1, userId: 1234567890, message: "hello"}]));
             res.end(JSON.stringify(responses));
           }
-        })
+        });
       }
 
-    })
-  }
+    });
+  };
 
 handlers['GET /cookie'] = function(req, res) {
   var cookie = req.headers.cookie.split('=')[1];

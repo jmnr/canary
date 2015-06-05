@@ -41,10 +41,10 @@ handlers['GET /allClaps'] = function(req, res) {
           // res.end(JSON.stringify([{time: 1, userId: 1234567890, message: "hello"}]));
           res.end(JSON.stringify(responses));
         }
-      })
+      });
     }
 
-  })
+  });
 
   // client.get("tweetcount", function(err, reply) {
   //   var tweetnumber = Number(reply);
@@ -63,7 +63,7 @@ handlers['GET /allClaps'] = function(req, res) {
   //     }
   //
   //   })
-}
+};
 
 
 handlers['GET /cookie'] = function(req, res) {
