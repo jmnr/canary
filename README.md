@@ -25,11 +25,11 @@ We followed these steps to build Canary:
 
 - [x] Make Create, Read and Delete (CR-D) endpoints
 
-CR-D endpoints have been created in our handlers.js file. Handlers include ['POST /addClap'], ['GET /allClaps'], ['GET /cookie'] and a generic handler.
+*CR-D endpoints have been created in our handlers.js file. Handlers include ['POST /addClap'], ['GET /allClaps'], ['GET /cookie'] and a generic handler.*
 
 - [x] Store tweets as JSON in memory
 
-Claps were initially stored in a JSON file, but have since been moved to Redis.
+*Claps were initially stored in a JSON file, but have since been moved to Redis.*
 
 ### Step 2
 
@@ -39,25 +39,31 @@ Claps were initially stored in a JSON file, but have since been moved to Redis.
 
 - [ ] Use Cookies to restrict tweet deletion to the browser from which the tweet was originally created (in progress)
 
-Cookies are being handled server-side, written and read through the header of the HTTP request. We are using randomly-generated userIds to attach an identity to each clap. This then determines who can delete a clap.
+*Cookies are being handled server-side, written and read through the header of the HTTP request. We are using randomly-generated userIds to attach an identity to each clap. This then determines who can delete a clap.*
 
 ### Step 4
 
 - [x] Move Tweets to Redis
 
-Claps are
+*Claps are now stored in a Redis database.*
 
 ### Step 5
 
-- [ ] Deploy to Heroku
+- [ ] Deploy to Heroku (in progress)
+
+*Canary is hosted on Heroku, and can be found [here](http://canaryapp.herokuapp.com)
 
 ### Step 6
 
 - [x] Add real-time updates of tweets
 
+*Right now claps appear on the timeline as they are posted. We have started looked at socket.io and hope to eventually use this for more efficient real time updates.*
+
 ### Stretch goals
 
 - [ ] Hash tag functionality
+
+*We hope to make it possible for Canary users to filter their claps by hash tag.*
 
 ##How can you run Canary?
 
