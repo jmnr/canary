@@ -31,13 +31,13 @@ handlers['GET /allClaps'] = function(req, res) {
 
   client.sort("tweets", function(err, data) {
     var tweetnumber = data.length;
-    console.log(data);
+    // console.log(data);
     for (var i=(tweetnumber-1); i>=0; i--) {
       client.hgetall(data[i], function(err, obj) {
-        console.log("obj:",obj);
+        // console.log("obj:",obj);
         responses.push(obj);
         if (responses.length === tweetnumber) {
-          console.log("Responses:", responses);
+          // console.log("Responses:", responses);
           // res.end(JSON.stringify([{time: 1, userId: 1234567890, message: "hello"}]));
           res.end(JSON.stringify(responses));
         }

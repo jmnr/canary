@@ -8,7 +8,6 @@
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.18.0.css">
   </head>
-
   <body>
     <div id="content">
 
@@ -30,6 +29,7 @@
 
     </div>
 
+
     <!-- <div id="qunit"></div>
     <div id="qunit-fixture"></div>
     <script src="//code.jquery.com/qunit/qunit-1.18.0.js"></script>
@@ -37,5 +37,23 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="script.js"></script>
-  </body>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script>
+    var socket = io();
+
+    $('#submitButton').click(function(){
+       socket.emit('chat message', $('#newClapInput').val());
+       console.log($('#newClapInput').val());
+       $('#newClapInput').val('');
+       return false;
+     });
+
+     socket.on('chat message', function(msg){
+       console.log(msg);
+       $("#claps").prepend('<div class="clap">' +
+         '<p>' + msg + '</p>' + '</div>')
+     });
+
+  </script>
+  <body>
 </html>

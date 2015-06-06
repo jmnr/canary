@@ -69,7 +69,7 @@
           userIdMatch.hide().prependTo("#claps").fadeIn("slow");
         });
       }
-        $('#newClapInput').val('');
+        // $('#newClapInput').val('');
 
     } else {
       alert("Provide your egotistical ramblings in the text box.");
