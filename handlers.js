@@ -1,56 +1,79 @@
 var handlers = {};
 var fs = require('fs');
+var redis = require("redis");
+var client = redis.createClient();
+// var url = require('url');
+// var redisURL = url.parse(process.env.REDISCLOUD_URL);
+// var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+// client.auth(redisURL.auth.split(":")[1]);
 
 handlers['POST /addClap'] = function(req, res) {
-  // req.on('error', function(err) {
-  //   console.log('problem with request: ' + err.message);
-  //   res.end("error");
-  // });
-  var cookie = req.headers.cookie.split('=')[1];
   var newClap;
-  var claps = require(__dirname + '/claps.json'); //loads the array with all tweets
-
+  var cookie = req.headers.cookie.split('=')[1];
   req.on('data', function(chunk) {
     newClap = chunk + ''; //turns clap input box buffer into text
   });
 
   req.on('end', function() {
-    var entry = {
-      message: newClap,
-      time: new Date().getTime(),
-      userId: cookie
-    };
-    claps.push(entry); //adds new clap to claps array\
-    fs.writeFile('claps.json', JSON.stringify(claps), function (err) { //rewrites the file with new tweet
-      // if (err) throw err;
-    });
+    var clapTime = new Date().getTime();
+    var clapObj = {
+            "userId": cookie,
+            "message": newClap,
+            "time": clapTime
+            };
+    client.hmset(clapTime, clapObj);
+    client.sadd("tweets", clapTime);
     res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-    res.end(JSON.stringify(entry)); //sends back new tweet for display
+    res.end(JSON.stringify(clapObj)); //sends back new tweet for display
   });
 
 };
 
 handlers['GET /allClaps'] = function(req, res) {
-  var clapsLoad = require(__dirname + '/claps.json');
-  res.end(JSON.stringify(clapsLoad));
+  var responses = [];
+
+  client.sort("tweets", function(err, data) { //what is tweets in this context
+    var tweetnumber = data.length;
+    var callback = function(err, obj) {
+      responses.push(obj);
+      if (responses.length === tweetnumber) {
+        res.end(JSON.stringify(responses));
+      }
+    };
+    for (var i = (tweetnumber - 1); i >= 0; i--) {
+      client.hgetall(data[i], callback);
+    }
+  });
 };
 
 handlers['GET /cookie'] = function(req, res) {
-  var cookie = req.headers.cookie.split('=')[1];
-  if(cookie === undefined) {cookie = false;}
+  var cookie = req.headers.cookie ? req.headers.cookie.split('=')[1] : false;
   res.end(cookie);
+};
+
+handlers['POST /delete'] = function(req, res) {
+  var time;
+  req.on('data', function(chunk) {
+    time = chunk + ''; //turns clap input box buffer into text
+    console.log(time);
+  });
+
+  req.on('end', function() {
+    client.srem("tweets", -1, time);
+    res.end();
+  });
 };
 
 handlers.generic = function(req, res) {
   fs.readFile(__dirname + req.url, function(err, data){
-    // if (err){
-    //   res.end();
-    // }
-    // else {
+    if (err){
+      res.end();
+    }
+    else {
       var ext = req.url.split('.')[1];
       res.writeHead(200, {'Content-Type' : 'text/' + ext});
       res.end(data);
-    // }
+    }
   });
 };
 
