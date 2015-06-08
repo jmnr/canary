@@ -65,6 +65,10 @@
       var clapAdd = data.userId === cookie ? $(addUserClap(data)) : $(addClap(data));
       clapAdd.hide().prependTo("#claps").fadeIn("slow");
     });
+
+    socket.on('delete clap', function(clapId){ //socket listener
+      $("#" + clapId).fadeOut("slow");
+    });
   };
 
   $('#submitButton').click(function() {
@@ -89,7 +93,7 @@
   $('#newClapInput').keypress(function(e){
     if(e.keyCode == 13) {
       $('#submitButton').click();
-      return false; //prevents a linebreak being added with enter key
+      return false; //prevents a linebreak being added by enter key
     }
   });
 
@@ -99,9 +103,8 @@
 
   $('body').on('click','.delButtons', function() {
     var clapId = $(this).parent().attr("id");
-    $(this).parent().fadeOut("slow", this.remove()); //remove is a callback so fade goes first
     $.post('/delete', clapId, function() {
-      console.log("delete request sent");
+      socket.emit('delete clap', clapId);
     });
   });
 }());
