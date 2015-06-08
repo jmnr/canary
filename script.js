@@ -42,12 +42,27 @@
     });
   };
 
+  var addCookie = function() {
+    var userId = "";
+    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for(var i = 0; i < 10; i++) {
+        userId += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return "userId=" + userId + "; expires=Fri, 18 Dec 2015 12:00:00 UTC";
+  };
+
   window.onload = function() {
     socket = io();
 
-    $.get('/cookie', function(data) {
-      cookie = data;
-    });
+    if(!document.cookie) {
+      document.cookie = addCookie();
+      console.log("NEW", document.cookie);
+    } else {
+      console.log("CURRENT", document.cookie);
+    }
+
+    cookie = document.cookie.split('userId=')[1];
 
     $.get('/allClaps', function(data) {
       var claps = JSON.parse(data);

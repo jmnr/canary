@@ -16,6 +16,7 @@ client.auth(redisURL.auth.split(":")[1]);
 handlers['POST /addClap'] = function(req, res) {
   var newClap;
   var cookie = req.headers.cookie.split('=')[1];
+  console.log("cookie server", cookie);
   req.on('data', function(chunk) {
     newClap = chunk + ''; //turns clap input box buffer into text
   });
@@ -23,16 +24,15 @@ handlers['POST /addClap'] = function(req, res) {
   req.on('end', function() {
     var clapTime = new Date().getTime();
     var clapObj = {
-            "userId": cookie,
-            "message": newClap,
-            "time": clapTime
-            };
+      "userId": cookie,
+      "message": newClap,
+      "time": clapTime
+    };
     client.hmset(clapTime, clapObj);
     client.sadd("tweets", clapTime);
     res.writeHead(200, "OK", {'Content-Type': 'text/html'});
     res.end(JSON.stringify(clapObj)); //sends back new tweet for display
   });
-
 };
 
 handlers['GET /allClaps'] = function(req, res) {
@@ -52,16 +52,18 @@ handlers['GET /allClaps'] = function(req, res) {
   });
 };
 
-handlers['GET /cookie'] = function(req, res) {
-  var cookie = req.headers.cookie ? req.headers.cookie.split('=')[1] : false;
-  res.end(cookie);
+handlers['GET /cookie'] = function(req, res) { //not needed anymore, doing cookies on client side
+  if(req.headers.cookie === undefined) {
+    var obj = handlers.addCookie();
+    res.writeHead(200, obj);
+  }
+  res.end(false);
 };
 
 handlers['POST /delete'] = function(req, res) {
   var time;
   req.on('data', function(chunk) {
     time = chunk + ''; //turns clap input box buffer into text
-    console.log(time);
   });
 
   req.on('end', function() {
