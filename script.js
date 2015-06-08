@@ -2,10 +2,13 @@
   "use strict";
 
   var cookie;
+  var socket;
 
   var hashtags = function (text) {
     return text.replace( new RegExp(/#\w+/g),
-      function myFunction(x){return "<a class='hashClick' href='#'>" + x + "</a>" ;});
+      function myFunction (x) {
+        return "<a class='hashClick' href='#'>" + x + "</a>";
+      });
   };
 
   var addClap = function (data) {
@@ -40,12 +43,14 @@
   };
 
   window.onload = function() {
+    socket = io();
+
     $.get('/cookie', function(data) {
       cookie = data;
     });
+
     $.get('/allClaps', function(data) {
       var claps = JSON.parse(data);
-      console.log("claps on the client side:", claps);
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
@@ -53,6 +58,12 @@
           cookie === claps[i].userId ? addUserClap(claps[i]) : addClap(claps[i]);
       }
       $("#claps").prepend(accessDOM);
+    });
+
+    socket.on('new clap', function(data){ //socket listener
+      data = JSON.parse(data);
+      var clapAdd = data.userId === cookie ? $(addUserClap(data)) : $(addClap(data));
+      clapAdd.hide().prependTo("#claps").fadeIn("slow");
     });
   };
 
@@ -64,12 +75,11 @@
       } else {
         $.post( '/addClap', newClapInput, function(data) {
           var newClap = JSON.parse(data);
-          var userIdMatch =
-            cookie === newClap.userId ? $(addUserClap(newClap)) : $(addClap(newClap));
-          userIdMatch.hide().prependTo("#claps").fadeIn("slow");
+          socket.emit('new clap', data);
         });
       }
-        // $('#newClapInput').val('');
+      
+      $('#newClapInput').val('');
 
     } else {
       alert("Provide your egotistical ramblings in the text box.");
@@ -94,5 +104,4 @@
       console.log("delete request sent");
     });
   });
-
 }());
