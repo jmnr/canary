@@ -84,7 +84,7 @@ body {
 .delButtons:hover {
   background: black;
   color: white;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 /*media queries*/
