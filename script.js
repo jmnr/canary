@@ -67,7 +67,9 @@
     });
 
     socket.on('delete clap', function(clapId){ //socket listener
-      $("#" + clapId).fadeOut("slow");
+      $("#" + clapId).fadeOut("slow", function() {
+        $("#" + clapId).remove();
+      });
     });
   };
 
