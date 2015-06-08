@@ -1,11 +1,12 @@
 var handlers = {};
 var fs = require('fs');
 var redis = require("redis");
-// var client = redis.createClient();
-var url = require('url');
-var redisURL = url.parse(process.env.REDISCLOUD_URL);
-var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
+var client = redis.createClient();
+
+// var url = require('url');
+// var redisURL = url.parse(process.env.REDISCLOUD_URL);
+// var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+// client.auth(redisURL.auth.split(":")[1]);
 
 handlers['POST /addClap'] = function(req, res) {
   var newClap;
@@ -21,6 +22,7 @@ handlers['POST /addClap'] = function(req, res) {
             "message": newClap,
             "time": clapTime
             };
+    console.log(clapObj);
     client.hmset(clapTime, clapObj);
     client.sadd("tweets", clapTime);
     // console.log("####new clap:" ,clapObj);

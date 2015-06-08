@@ -39,13 +39,42 @@
     });
   };
 
+  window.onload = getLocation();
+
+  function getLocation() {
+      if (navigator.geolocation) {
+        console.log("entered initialize");
+          navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+          console.log("Geolocation is not supported by this browser.");
+      }
+  };
+
+  function showPosition(position) {
+      console.log("latitiude:",position.coords.latitude);
+      console.log("longitude:", position.coords.longitude);
+      loadMap(position.coords.latitude, position.coords.longitude)
+      // return {latitude: lat, longitude: lon};
+  };
+
+  var loadMap = function(xCo, yCo) {
+    var map = L.map('map').setView([xCo, yCo], 100);
+    var layer = new L.StamenTileLayer("toner-lite");
+    map.addLayer(layer);
+    addMarker(xCo, yCo, map);
+  };
+
+  var addMarker = function(x, y, map) {
+    var marker = L.marker([x, y]).addTo(map);
+    // var marker = L.marker([x, y]).addTo(map) .bindPopup('Sort of the center of Bend.') .openPopup;
+  };
+
   window.onload = function() {
     $.get('/cookie', function(data) {
       cookie = data;
     });
     $.get('/allClaps', function(data) {
       var claps = JSON.parse(data);
-      console.log("claps on the client side:", claps);
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
@@ -57,6 +86,8 @@
   };
 
   $('#submitButton').click(function() {
+    var coords = getLocation();
+    // console.log(coords);
     var newClapInput = $('#newClapInput').val();
     if(newClapInput.length > 0) {
       if(newClapInput.indexOf("<") > -1 || newClapInput.indexOf(">") > -1) {
