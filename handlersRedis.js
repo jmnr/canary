@@ -71,8 +71,7 @@ handlers['GET /allClaps'] = function(req, res) {
 
 
 handlers['GET /cookie'] = function(req, res) {
-  var cookie = req.headers.cookie.split('=')[1];
-  if(cookie === undefined) {cookie = false;}
+  var cookie = req.headers.cookie ? req.headers.cookie.split('=')[1] : false ;
   res.end(cookie);
 };
 
