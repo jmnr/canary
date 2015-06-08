@@ -55,6 +55,7 @@ body {
 .inputButtons:hover {
   background: #ffff00;
   color: black;
+  cursor:pointer;
 }
 
 /*claps*/
@@ -83,6 +84,7 @@ body {
 .delButtons:hover {
   background: black;
   color: white;
+  cursor: pointer;
 }
 
 /*media queries*/
