@@ -17,7 +17,7 @@
 
       <div id="addContainer">
         <div id="newClap">
-          <textarea id="newClapInput" maxlength="141"></textarea>
+          <textarea id="newClapInput" maxlength="141" placeholder="Wanna brag?"></textarea>
           <div>
             <button id="submitButton" class="inputButtons" value="Submit">CLAP</button>
           </div>
@@ -26,8 +26,18 @@
 
       <!-- <div id="map"><div> -->
       <!-- <div id="clear"></div> -->
-      <div id="clapContainer">
-        <div id="claps">
+
+      <div id="tab-controls">
+        <button id="toFeed" class="buttons" value="FEED" onclick="toggleSlide()">FEED</button>
+        <button id="toMap" class="buttons" value="MAP" onclick="toggleSlide()">MAP</button>
+      </div>
+
+      <div id="clapContent">
+        <div id="clapContainer" class="tabs">
+          <div id="claps"></div>
+        </div>
+        <div id="mapContainer" class="tabs">
+          <div id="map"></div>
         </div>
       </div>
 
@@ -38,6 +48,7 @@
     <script src="//code.jquery.com/qunit/qunit-1.18.0.js"></script>
     <script src="/test/tests.js"></script> -->
 
+    <script language="JavaScript" type="text/javascript" src="carousel-display.js"></script>
     <script language="JavaScript" type="text/javascript" src="hub.js"></script>
     <script language="JavaScript" type="text/javascript" src="geolocation.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
