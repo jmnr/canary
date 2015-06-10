@@ -9,65 +9,31 @@
 [![Dependency Status](https://david-dm.org/jmnr/canary.svg)](https://david-dm.org/jmnr/canary)
 [![devDependency Status](https://david-dm.org/jmnr/canary/dev-status.svg)](https://david-dm.org/jmnr/canary#info=devDependencies)
 
-Canary is a social media networking sensation, built by four students at [Founders & Coders London](http://foundersandcoders.org/). Canary gives the aging Twitter format a make-over with Node.js and an attractive new colour scheme.
-
-Canary does not handle tweets, dealing exclusively in "claps". Every visitor to the site has the opportunity to contribute claps. Each clap is limited to 141 characters.
+Canary is a code bragging community, built by four students at [Founders & Coders London](http://foundersandcoders.org/). Users are invited to brag to Canary about their coding triumphs and receive virtual applause for their breakthrough.
 
 ## Why are we building Canary?
 
-We're building Canary as a learning exercise in using Node.js for large-scale projects, and to provide a hipster twitter alternative for those looking for a social network out of the mainstream.
+We're building Canary as a learning exercise in using Node.js for large-scale projects, as well as to provide a lifeline for needy coders in search of validation.
 
 ## How is Canary built?
 
 We followed these steps to build Canary:
 
-### Step 1
-
 - [x] Make Create, Read and Delete (CR-D) endpoints
-
-*CR-D endpoints were created in our handlers.js file.*
-
-- [x] Store tweets as JSON in memory
-
-*Claps were initially stored in a JSON file, but have since been moved to Redis.*
-
-### Step 2
-
+- [x] Store tweets as JSON in memory (now obsolete, as we're using Redis)
 - [x] Store Tweets in the file system
-
-### Step 3
-
-- [ ] Use Cookies to restrict tweet deletion to the browser from which the tweet was originally created (in progress)
-
-*Cookies are being handled server-side, written and read through the header of the HTTP request. We are using randomly-generated userIds to attach an identity to each clap. This then determines who can delete a clap.*
-
-### Step 4
-
+- [x] Use Cookies to restrict tweet deletion to the browser from which the tweet was originally created
 - [x] Move Tweets to Redis
-
-*Claps are now stored in a Redis database.*
-
-### Step 5
-
-- [ ] Deploy to Heroku (in progress)
-
-*Canary is hosted on Heroku, and can be found [here](http://canaryapp.herokuapp.com).*
-
-### Step 6
-
-- [x] Add real-time updates of tweets
-
-*Right now claps appear on the timeline as they are posted. We have started looked at socket.io and hope to eventually use this for more efficient real time updates.*
-
-### Stretch goals
-
-- [ ] Hash tag functionality
-
-*We aim to make it possible for Canary users to filter their claps by hash tag.*
+- [x] Deploy to Heroku
+- [x] Add real-time updates of tweets with Socket.io
+- [ ] Hash tag functionality (for different programming languages)
+- [ ] Attach geolocation data to every clap
+- [ ] Allow users to select their own location from a map
+- [ ] Display all claps on a map
 
 ##How can you run Canary?
 
-You will need to have nodejs and nodemon installed, plus a basic understanding of git and your terminal to get this working.
+You will need to have node.js, nodemon and redis installed, plus a basic understanding of git and your terminal to get this working.
 
 ### 1. Clone the repo
 

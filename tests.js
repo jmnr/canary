@@ -7,7 +7,7 @@ test("check CSS is loading properly", function() {
   equal(content, '50px 100px', 'css is present');
 });
 
-test("check clap appears when button is pressed", function() {
-  var clap = getComputedStyle(document.getElementById('content'), null).margin;
-  equal(clap, 'this is a test clap', 'claps being sent successfully');
-});
+// test("check clap appears when button is pressed", function() {
+//   var clap = getComputedStyle(document.getElementById('content'), null).margin;
+//   equal(clap, 'this is a test clap', 'claps being sent successfully');
+// });
