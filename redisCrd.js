@@ -1,26 +1,32 @@
 var redis = require("redis");
-var client = redis.createClient();
 var geolocation = require("./geolocation.js");
-// var url = require('url');
-// var redisURL = url.parse(process.env.REDISCLOUD_URL);
-// var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-// client.auth(redisURL.auth.split(":")[1]);
+
+// //local
+// var client = redis.createClient();
+// //local
+
+//heroku
+var url = require('url');
+var redisURL = url.parse(process.env.REDISCLOUD_URL);
+var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+client.auth(redisURL.auth.split(":")[1]);
+//heroku
 
 var redisCrd = {
   write: function(clap, res) {
-    var clapTime = new Date().getTime();
     var clapObj = {
-            "userId": clap.cookie,
-            "message": clap.message,
-            "time": clapTime,
-            "lat": clap.lat,
-            "lon": clap.lon
+            userId: clap.cookie,
+            message: clap.message,
+            time: new Date().getTime(),
+            lat: clap.lat,
+            lon: clap.lon
             };
-    console.log(clapObj);
-    client.hmset(clapTime, clapObj);
-    client.sadd("tweets", clapTime);
-    res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-    res.end(JSON.stringify(clapObj)); //sends back new tweet for display
+    console.log("clapObj:",clapObj);
+    client.hmset(clapObj.time, clapObj, function(err){
+      res.writeHead(200, "OK", {'Content-Type': 'text/html'});
+      res.end(JSON.stringify(clapObj)); //sends back new tweet for display
+    });
+    client.sadd("tweets", clapObj.time);
   },
 
   readAll: function(res) {

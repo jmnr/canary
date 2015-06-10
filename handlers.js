@@ -3,15 +3,14 @@ var fs = require('fs');
 var redisCrd = require('./redisCrd.js');
 
 handlers['POST /addClap'] = function(req, res) {
-  var newClap = {};
+  var newClap;
+
   req.on('data', function(chunk) {
     newClap = chunk + ''; //turns clap input box buffer into text
   });
-  var cookie = req.headers.cookie.split('=')[1];
   req.on('end', function() {
     newClap = JSON.parse(newClap);
-    console.log("newClap server:", newClap);
-    newClap.cookie = cookie;
+    newClap.cookie = req.headers.cookie.split('=')[1];
     redisCrd.write(newClap, res);
   });
 };
@@ -20,9 +19,12 @@ handlers['GET /allClaps'] = function(req, res) {
   redisCrd.readAll(res);
 };
 
-handlers['GET /cookie'] = function(req, res) {
-  var cookie = req.headers.cookie ? req.headers.cookie.split('=')[1] : false ;
-  res.end(cookie);
+handlers['GET /cookie'] = function(req, res) { //not needed anymore, doing cookies on client side
+  if(req.headers.cookie === undefined) {
+    var obj = handlers.addCookie();
+    res.writeHead(200, obj);
+  }
+  res.end(false);
 };
 
 handlers['POST /delete'] = function(req, res) {
