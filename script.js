@@ -57,11 +57,8 @@
 
     if(!document.cookie) {
       document.cookie = addCookie();
-      console.log("NEW", document.cookie);
-    } else {
-      console.log("CURRENT", document.cookie);
     }
-
+    
     cookie = document.cookie.split('userId=')[1];
 
     $.get('/allClaps', function(data) {
@@ -91,14 +88,17 @@
   $('#submitButton').click(function() {
     var newClapInput = $('#newClapInput').val();
     if(newClapInput.length > 0) {
-      if(newClapInput.indexOf("<") > -1 || newClapInput.indexOf(">") > -1) {
-        alert("Behave yourself!");
-      } else {
-        $.post( '/addClap', newClapInput, function(data) {
-          var newClap = JSON.parse(data);
-          socket.emit('new clap', data);
-        });
+      if(newClapInput.indexOf("<") > -1) {
+        newClapInput = newClapInput.replace("<", "&lt");
       }
+      if(newClapInput.indexOf(">") > -1) {
+        newClapInput = newClapInput.replace(">", "&gt");
+      }
+      
+      $.post( '/addClap', newClapInput, function(data) {
+        var newClap = JSON.parse(data);
+        socket.emit('new clap', data);
+      });
       
       $('#newClapInput').val('');
 
