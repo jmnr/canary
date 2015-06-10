@@ -1,0 +1,21 @@
+#map {
+  height: 500px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#lat {
+  background-color: red;
+}
+
+#lon {
+  background-color: red;
+}
+
+#newlat {
+  background-color: blue;
+}
+
+#newlon {
+  background-color: blue;
+}
