@@ -3,14 +3,14 @@ var fs = require('fs');
 var redis = require("redis");
 
 //local
-var client = redis.createClient();
+// var client = redis.createClient();
 //local
 
 //heroku
-// var url = require('url');
-// var redisURL = url.parse(process.env.REDISCLOUD_URL);
-// var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-// client.auth(redisURL.auth.split(":")[1]);
+var url = require('url');
+var redisURL = url.parse(process.env.REDISCLOUD_URL);
+var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+client.auth(redisURL.auth.split(":")[1]);
 //heroku
 
 handlers['POST /addClap'] = function(req, res) {
