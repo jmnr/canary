@@ -43,21 +43,22 @@
     $.get('/cookie', function(data) {
       cookie = data;
     });
-
-    $.get('/allClaps', function(data) {
-      var claps = JSON.parse(data);
-      var accessDOM = '';
-      var clapLoad = claps.length > 50 ? 50 : claps.length;
-      for(var i = 0 ; i < clapLoad; i++) {
-        geolocation.checkCoords(claps[i]);
-        accessDOM +=
-          cookie === claps[i].userId ? addUserClap(claps[i]) : addClap(claps[i]);
-      }
-      $("#claps").prepend(accessDOM);
+    hub.listen("map loaded", function(){
+      $.get('/allClaps', function(data) {
+        var claps = JSON.parse(data);
+        var accessDOM = '';
+        var clapLoad = claps.length > 50 ? 50 : claps.length;
+        for(var i = 0 ; i < clapLoad; i++) {
+          geolocation.checkCoords(claps[i]);
+          accessDOM +=
+            cookie === claps[i].userId ? addUserClap(claps[i]) : addClap(claps[i]);
+        }
+        $("#claps").prepend(accessDOM);
+      });
     });
   };
 
-  window.onload = geolocation.initialize(getAllClaps);
+  window.onload = hub.emit("page loaded");
 
 
   $('#submitButton').click(function() {

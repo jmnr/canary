@@ -1,4 +1,4 @@
-var handlers = require('./handlersRedis.js');
+var handlers = require('./handlers.js');
 var fs = require('fs');
 var index = fs.readFileSync(__dirname + '/index.html');
 

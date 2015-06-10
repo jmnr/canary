@@ -1,56 +1,50 @@
 var handlers = {};
 var fs = require('fs');
+var redisCrd = require('./redisCrd.js');
 
 handlers['POST /addClap'] = function(req, res) {
-  // req.on('error', function(err) {
-  //   console.log('problem with request: ' + err.message);
-  //   res.end("error");
-  // });
-  var cookie = req.headers.cookie.split('=')[1];
-  var newClap;
-  var claps = require(__dirname + '/claps.json'); //loads the array with all tweets
-
+  var newClap = {};
   req.on('data', function(chunk) {
     newClap = chunk + ''; //turns clap input box buffer into text
   });
-
+  var cookie = req.headers.cookie.split('=')[1];
   req.on('end', function() {
-    var entry = {
-      message: newClap,
-      time: new Date().getTime(),
-      userId: cookie
-    };
-    claps.push(entry); //adds new clap to claps array\
-    fs.writeFile('claps.json', JSON.stringify(claps), function (err) { //rewrites the file with new tweet
-      // if (err) throw err;
-    });
-    res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-    res.end(JSON.stringify(entry)); //sends back new tweet for display
+    newClap = JSON.parse(newClap);
+    console.log("newClap server:", newClap);
+    newClap.cookie = cookie;
+    redisCrd.write(newClap, res);
   });
-
 };
 
 handlers['GET /allClaps'] = function(req, res) {
-  var clapsLoad = require(__dirname + '/claps.json');
-  res.end(JSON.stringify(clapsLoad));
+  redisCrd.readAll(res);
 };
 
 handlers['GET /cookie'] = function(req, res) {
-  var cookie = req.headers.cookie.split('=')[1];
-  if(cookie === undefined) {cookie = false;}
+  var cookie = req.headers.cookie ? req.headers.cookie.split('=')[1] : false ;
   res.end(cookie);
+};
+
+handlers['POST /delete'] = function(req, res) {
+  var time;
+  req.on('data', function(chunk) {
+    time = chunk + ''; //turns clap input box buffer into text
+  });
+  req.on('end', function() {
+    redisCrd.remove(time, res);
+  });
 };
 
 handlers.generic = function(req, res) {
   fs.readFile(__dirname + req.url, function(err, data){
-    // if (err){
-    //   res.end();
-    // }
-    // else {
+    if (err){
+      res.end();
+    }
+    else {
       var ext = req.url.split('.')[1];
       res.writeHead(200, {'Content-Type' : 'text/' + ext});
       res.end(data);
-    // }
+    }
   });
 };
 
