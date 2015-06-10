@@ -1,55 +1,22 @@
 var handlers = {};
 var fs = require('fs');
-var redis = require("redis");
-
-//local
-// var client = redis.createClient();
-//local
-
-//heroku
-var url = require('url');
-var redisURL = url.parse(process.env.REDISCLOUD_URL);
-var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
-//heroku
+var redisCrd = require('./redisCrd.js');
 
 handlers['POST /addClap'] = function(req, res) {
   var newClap;
-  var cookie = req.headers.cookie.split('=')[1];
-  
+
   req.on('data', function(chunk) {
     newClap = chunk + ''; //turns clap input box buffer into text
   });
-
   req.on('end', function() {
-    var clapTime = new Date().getTime();
-    var clapObj = {
-      "userId": cookie,
-      "message": newClap,
-      "time": clapTime
-    };
-    client.hmset(clapTime, clapObj);
-    client.sadd("tweets", clapTime);
-    res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-    res.end(JSON.stringify(clapObj)); //sends back new tweet for display
+    newClap = JSON.parse(newClap);
+    newClap.cookie = req.headers.cookie.split('=')[1];
+    redisCrd.write(newClap, res);
   });
 };
 
 handlers['GET /allClaps'] = function(req, res) {
-  var responses = [];
-
-  client.sort("tweets", function(err, data) { //what is tweets in this context
-    var tweetnumber = data.length;
-    var callback = function(err, obj) {
-      responses.push(obj);
-      if (responses.length === tweetnumber) {
-        res.end(JSON.stringify(responses));
-      }
-    };
-    for (var i = (tweetnumber - 1); i >= 0; i--) {
-      client.hgetall(data[i], callback);
-    }
-  });
+  redisCrd.readAll(res);
 };
 
 handlers['GET /cookie'] = function(req, res) { //not needed anymore, doing cookies on client side
@@ -65,10 +32,8 @@ handlers['POST /delete'] = function(req, res) {
   req.on('data', function(chunk) {
     time = chunk + ''; //turns clap input box buffer into text
   });
-
   req.on('end', function() {
-    client.srem("tweets", -1, time);
-    res.end();
+    redisCrd.remove(time, res);
   });
 };
 

@@ -58,7 +58,7 @@
     if(!document.cookie) {
       document.cookie = addCookie();
     }
-    
+
     cookie = document.cookie.split('userId=')[1];
 
     $.get('/allClaps', function(data) {
@@ -66,6 +66,7 @@
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
+        // geolocation.checkCoords(claps[i]);
         accessDOM +=
           cookie === claps[i].userId ? addUserClap(claps[i]) : addClap(claps[i]);
       }
@@ -85,23 +86,36 @@
     });
   };
 
-  $('#submitButton').click(function() {
-    var newClapInput = $('#newClapInput').val();
-    if(newClapInput.length > 0) {
-      if(newClapInput.indexOf("<") > -1) {
-        newClapInput = newClapInput.replace("<", "&lt");
-      }
-      if(newClapInput.indexOf(">") > -1) {
-        newClapInput = newClapInput.replace(">", "&gt");
-      }
-      
-      $.post( '/addClap', newClapInput, function(data) {
-        var newClap = JSON.parse(data);
-        socket.emit('new clap', data);
-      });
-      
-      $('#newClapInput').val('');
+  // var getAllClaps = function() {
+  //   all window onload functions
+  //   });
 
+  // window.onload = geolocation.initialize(getAllClaps);
+
+
+  $('#submitButton').click(function() {
+    var clapData = {};
+    clapData.message = $('#newClapInput').val();
+    clapData.lat = geolocation.lat;
+    clapData.lon = geolocation.lon;
+
+    if(clapData.message.length > 0) {
+
+      if(clapData.message.indexOf("<") > -1) {
+        clapData.message = clapData.message.replace("<", "&lt");
+      }
+      if(clapData.message.indexOf(">") > -1) {
+        clapData.message = clapData.message.replace(">", "&gt");
+      }
+
+      $.post( '/addClap', JSON.stringify(clapData), function(data) {
+        var newClap = JSON.parse(data);
+        console.log("clap received from post request:", newClap);
+        socket.emit('new clap', data);
+        // geolocation.checkCoords(newClap); //change name of checkcoords to be more descriptive
+      });
+
+      $('#newClapInput').val('');
     } else {
       alert("Provide your egotistical ramblings in the text box.");
     }

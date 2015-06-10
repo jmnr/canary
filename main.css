@@ -58,6 +58,18 @@ body {
   cursor:pointer;
 }
 
+/*map*/
+
+#map {
+  height: 300px;
+  display: block;
+}
+
+#clear {
+  height: 400px;
+  clear: both;
+}
+
 /*claps*/
 
 #claps {
@@ -67,6 +79,7 @@ body {
 .clap {
   background-color: white;
   border: 2px solid #101010;
+  display: block;
   min-height: 75px;
   padding: 10px;
   width: 400px;
