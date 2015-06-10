@@ -7,12 +7,19 @@ handlers['POST /addClap'] = function(req, res) {
 
   req.on('data', function(chunk) {
     newClap = chunk + ''; //turns clap input box buffer into text
+    if(newClap.indexOf("<") > -1) {
+      newClap = newClap.replace("<", "&lt");
+    }
+    if(newClap.indexOf(">") > -1) {
+      newClap = newClap.replace(">", "&gt");
+    }
+    console.log("newClap:", newClap);
   });
   req.on('end', function() {
     newClap = JSON.parse(newClap);
     newClap.userId = req.headers.cookie.split('=')[1];
     newClap.time = new Date().getTime();
-    redisCrd.write(newClap, function(clap) {
+    redisCrd.create(newClap, function(clap) {
       res.writeHead(200, "OK", {'Content-Type': 'text/html'});
       res.end(JSON.stringify(clap)); //sends back new tweet for display
     });
@@ -20,7 +27,7 @@ handlers['POST /addClap'] = function(req, res) {
 };
 
 handlers['GET /allClaps'] = function(req, res) {
-  redisCrd.readAll(function(data){
+  redisCrd.read(function(data){
     res.end(JSON.stringify(data));
   });
 };
@@ -31,7 +38,7 @@ handlers['POST /delete'] = function(req, res) {
     time = chunk + ''; //turns clap input box buffer into text
   });
   req.on('end', function() {
-    redisCrd.remove(time, function(reply){
+    redisCrd.delete(time, function(reply){
       res.end(reply.toString());
     });
   });

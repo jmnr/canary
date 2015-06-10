@@ -19,18 +19,24 @@ Shot.inject(handle['POST /addClap'], { headers: {cookie: '12345=12345' }, method
       assert.deepEqual(testclap.lat, testObj.lat);
       assert.deepEqual(testclap.lon, testObj.lon);
       console.log("test 1 passed");
-      // var clapData = require('../claps.json');
-      // assert.equal(clapData[clapData.length -1].message, "testmessage");
-      // console.log("test 2 passed");
+});
+
+var testObj3 = {message:"<script>Hello</script>",lat: 1234567, lon: 7654321, time: 98989898, userId: 7878787};
+
+console.log("#test 9 test for guarding against script injections in the POST endpoint");
+Shot.inject(handle['POST /addClap'], { headers: {cookie: '12345=12345' }, method: 'POST', url: '/addClap', payload: JSON.stringify(testObj3) }, function (res) {
+      var response = JSON.parse(res.payload);
+      assert.equal(response.message, '&ltscript&gtHello</script>');
+      console.log("test 9 passed");
 });
 
 var testObj2 = {message:"testmessage",lat: 1234567, lon: 7654321, time: 98989898, userId: 7878787};
 
 console.log("#test 2: handlers['GET /allClaps'] retrieves all the messages from the stored file ");
-redisCrd.write(testObj2, function(){
+redisCrd.create(testObj2, function(clap){
   Shot.inject(handle['GET /allClaps'], {method: 'GET', url: '/allClaps'}, function (res) {
         var allclaps = JSON.parse(res.payload);
-        assert.equal(allclaps[0].message, "testmessage");
+        assert.equal(allclaps[0].message, clap.message);
         console.log("test 2 passed");
   });
 });
@@ -50,7 +56,7 @@ Shot.inject(handle.generic, { method: 'GET', url: '/'}, function (res) {
 });
 
 console.log("#test 5: test handlers['POST /delete'] deletes a tweet when given the correct time stamp");
-redisCrd.write(testObj2, function(){});
+redisCrd.create(testObj2, function(){});
 Shot.inject(handle['POST /delete'], { method: 'POST', url: '/delete', payload: "98989898"}, function (res) {
       assert.equal(res.payload, "1");
       console.log("test 5 passed");

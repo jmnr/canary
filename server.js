@@ -1,5 +1,4 @@
 var serverHandler = require('./router.js');
-
 var http = require("http").createServer(router);
 var io = require('socket.io')(http);
 

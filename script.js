@@ -86,13 +86,6 @@
     });
   };
 
-  // var getAllClaps = function() {
-  //   all window onload functions
-  //   });
-
-  // window.onload = geolocation.initialize(getAllClaps);
-
-
   $('#submitButton').click(function() {
     var clapData = {};
     clapData.message = $('#newClapInput').val();
@@ -110,7 +103,6 @@
 
       $.post( '/addClap', JSON.stringify(clapData), function(data) {
         var newClap = JSON.parse(data);
-        console.log("clap received from post request:", newClap);
         socket.emit('new clap', data);
         // geolocation.checkCoords(newClap); //change name of checkcoords to be more descriptive
       });
