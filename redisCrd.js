@@ -1,55 +1,52 @@
 var redis = require("redis");
-var geolocation = require("./geolocation.js");
 
 // //local
 // var client = redis.createClient();
 // //local
 
-//heroku
-var url = require('url');
-var redisURL = url.parse(process.env.REDISCLOUD_URL);
-var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
-//heroku
+// //heroku
+// var url = require('url');
+// var redisURL = url.parse(process.env.REDISCLOUD_URL);
+// var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+// client.auth(redisURL.auth.split(":")[1]);
+// //heroku
+
+//fakeredis when testing redis
+var client = require('fakeredis').createClient("test");
 
 var redisCrd = {
-  create: function(clap, res) {
-    var clapObj = {
-      userId: clap.cookie,
-      message: clap.message,
-      time: new Date().getTime(),
-      lat: clap.lat,
-      lon: clap.lon
-    };
-    client.hmset(clapObj.time, clapObj, function(err){
-      res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-      res.end(JSON.stringify(clapObj)); //sends back new tweet for display
+  create: function(clap, callback) {
+    client.hmset(clap.time, clap, function(err){
+      callback(clap);
     });
   },
 
-  read: function(res) {
+  read: function(callback) {
     var clapsLoad = [];
     var len;
 
-    var callback = function(err, data) {
+    var cb = function(err, data) {
       clapsLoad.push(data);
       if(clapsLoad.length === len) {
-        res.end(JSON.stringify(clapsLoad));
+        callback(clapsLoad);
       }
     };
 
     client.scan(0, function(err, data) {
       var claps = data[1];
+      console.log("all data", claps);
       len = claps.length;
       for(var i = 0; i < len; i++) {
-        client.hgetall(claps[i], callback);
+        client.hgetall(claps[i], cb);
       }
     });
   },
 
-  delete: function(time, res) {
-    client.del(time);
-    res.end();
+  delete: function(time, callback) {
+    client.del(time, function(err, reply) {
+      callback(reply);
+    });
+
   }
 
 };
