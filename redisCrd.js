@@ -1,16 +1,16 @@
 var redis = require("redis");
 var geolocation = require("./geolocation.js");
 
-// //local
-// var client = redis.createClient();
-// //local
+//local
+var client = redis.createClient();
+//local
 
-//heroku
-var url = require('url');
-var redisURL = url.parse(process.env.REDISCLOUD_URL);
-var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
-//heroku
+// //heroku
+// var url = require('url');
+// var redisURL = url.parse(process.env.REDISCLOUD_URL);
+// var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+// client.auth(redisURL.auth.split(":")[1]);
+// //heroku
 
 var redisCrd = {
   write: function(clap, res) {
