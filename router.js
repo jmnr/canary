@@ -1,8 +1,8 @@
-var handlers = require('./handlers.js');
+var handlers = require('./handlers');
 var fs = require('fs');
 var index = fs.readFileSync(__dirname + '/index.html');
 
-function serverHandler (req, res){
+function router (req, res){
   if (req.url.length === 1) {
     res.writeHead(200, {"Content-Type": "text/html"});
     res.end(index.toString());
@@ -19,4 +19,4 @@ function serverHandler (req, res){
   }
 }
 
-module.exports = serverHandler;
+module.exports = router;

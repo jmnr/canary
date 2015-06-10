@@ -1,35 +1,28 @@
 var redis = require("redis");
-var geolocation = require("./geolocation.js");
 
 // //local
 // var client = redis.createClient();
 // //local
 
-//heroku
-var url = require('url');
-var redisURL = url.parse(process.env.REDISCLOUD_URL);
-var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
-client.auth(redisURL.auth.split(":")[1]);
-//heroku
+// //heroku
+// var url = require('url');
+// var redisURL = url.parse(process.env.REDISCLOUD_URL);
+// var client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
+// client.auth(redisURL.auth.split(":")[1]);
+// //heroku
+
+//fakeredis when testing redis
+var client = require('fakeredis').createClient("test");
 
 var redisCrd = {
-  write: function(clap, res) {
-    var clapObj = {
-            userId: clap.cookie,
-            message: clap.message,
-            time: new Date().getTime(),
-            lat: clap.lat,
-            lon: clap.lon
-            };
-    console.log("clapObj:",clapObj);
-    client.hmset(clapObj.time, clapObj, function(err){
-      res.writeHead(200, "OK", {'Content-Type': 'text/html'});
-      res.end(JSON.stringify(clapObj)); //sends back new tweet for display
+  write: function(clap, callback) {
+    client.hmset(clap.time, clap, function(err){
+      callback(clap);
     });
-    client.sadd("tweets", clapObj.time);
+    client.sadd("tweets", clap.time);
   },
 
-  readAll: function(res) {
+  readAll: function(callback) {
     var responses = [];
     client.sort("tweets", function(err, data) {
       var tweetnumber = data.length;
@@ -37,16 +30,19 @@ var redisCrd = {
         client.hgetall(data[i], function(err, obj) {
           responses.push(obj);
           if (responses.length === tweetnumber) {
-            res.end(JSON.stringify(responses));
+            // console.log("retrieved responses", responses);
+            callback(responses);
           }
         });
       }
     });
   },
 
-  remove: function(time, res) {
+  remove: function(time, callback) {
     client.srem("tweets", -1, time);
-    res.end();
+    client.del(time, function(err, reply){
+      callback(reply);
+    });
   }
 
 };
