@@ -7,6 +7,12 @@ handlers['POST /addClap'] = function(req, res) {
 
   req.on('data', function(chunk) {
     newClap = chunk + ''; //turns clap input box buffer into text
+    if(newClap.indexOf("<") > -1) {
+      newClap = newClap.replace("<", "&lt");
+    }
+    if(newClap.indexOf(">") > -1) {
+      newClap = newClap.replace(">", "&gt");
+    }
   });
   req.on('end', function() {
     newClap = JSON.parse(newClap);
