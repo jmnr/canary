@@ -41,7 +41,7 @@ var redisCrd = {
     client.scan(0, function(err, data) {
       var claps = data[1];
       len = claps.length;
-      for(var i = 0; i < len; i--) {
+      for(var i = 0; i < len; i++) {
         client.hgetall(claps[i], callback);
       }
     });
