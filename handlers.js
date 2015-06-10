@@ -17,12 +17,12 @@ handlers['POST /addClap'] = function(req, res) {
   req.on('end', function() {
     newClap = JSON.parse(newClap);
     newClap.cookie = req.headers.cookie.split('=')[1];
-    redisCrd.write(newClap, res);
+    redisCrd.create(newClap, res);
   });
 };
 
 handlers['GET /allClaps'] = function(req, res) {
-  redisCrd.readAll(res);
+  redisCrd.read(res);
 };
 
 handlers['GET /cookie'] = function(req, res) { //not needed anymore, doing cookies on client side
@@ -39,7 +39,7 @@ handlers['POST /delete'] = function(req, res) {
     time = chunk + ''; //turns clap input box buffer into text
   });
   req.on('end', function() {
-    redisCrd.remove(time, res);
+    redisCrd.delete(time, res);
   });
 };
 

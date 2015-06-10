@@ -1,6 +1,4 @@
-var handlers = require('./handlers.js');
 var serverHandler = require('./serverHandler.js');
-
 var http = require("http").createServer(serverHandler);
 var io = require('socket.io')(http);
 
