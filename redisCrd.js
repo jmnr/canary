@@ -24,16 +24,18 @@ var redisCrd = {
 
   readAll: function(callback) {
     var responses = [];
+    var tweetnumber;
+    function cb (err, obj) {
+      responses.push(obj);
+      if (responses.length === tweetnumber) {
+      callback(responses);
+      }
+    }
+
     client.sort("tweets", function(err, data) {
-      var tweetnumber = data.length;
+      tweetnumber = data.length;
       for (var i=(tweetnumber-1); i>=0; i--) {
-        client.hgetall(data[i], function(err, obj) {
-          responses.push(obj);
-          if (responses.length === tweetnumber) {
-            // console.log("retrieved responses", responses);
-            callback(responses);
-          }
-        });
+        client.hgetall(data[i], cb);
       }
     });
   },

@@ -7,7 +7,7 @@ var geolocation = {
   initialize: function(callback) {
     if (navigator.geolocation) {
       console.log("entered initialize");
-      var position  = navigator.geolocation.getCurrentPosition(geolocation.showMap, geolocation.showError)
+      var position  = navigator.geolocation.getCurrentPosition(geolocation.showMap, geolocation.showError);
     }
     else {
       console.log("Geolocation not supported");
@@ -35,7 +35,6 @@ var geolocation = {
   },
 
   addMarker: function(tweet) {
-    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map);
     var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map) .bindPopup(tweet.message) .openPopup;
   },
 
@@ -50,10 +49,10 @@ var geolocation = {
             console.log("Location information is unavailable.");
             break;
         case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out."
+            console.log("The request to get user location timed out.");
             break;
         case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
+            console.log("An unknown error occurred.");
             break;
     }
   },
