@@ -27,11 +27,11 @@
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
         markerCoords.push(claps[i]);
-        geolocation.addMarker(claps[i]);
+        geolocation.addMarker(claps[i], geolocation.map);
         accessDOM += addClap(claps[i]);
       }
       $("#claps").prepend(accessDOM);
-      console.log(markerCoords);
+      // console.log(markerCoords);
       // geolocation.addAllMarkers(markerCoords);
     });
 

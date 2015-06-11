@@ -20,8 +20,12 @@ var geolocation = {
     console.log("lat:", geolocation.lat);
     console.log("long:", geolocation.lon);
     geolocation.map = L.map('mapContainer').setView([geolocation.lat, geolocation.lon], 15);
+    geolocation.mapinput = L.map('inputMap').setView([geolocation.lat, geolocation.lon], 15);
     var layer = new L.StamenTileLayer("toner-lite");
+    var layer2 = new L.StamenTileLayer("toner-lite");
     geolocation.map.addLayer(layer);
+    geolocation.mapinput.addLayer(layer2);
+    geolocation.addMarker(geolocation, geolocation.mapinput, {clickable: true, draggable: true});
     geolocation.callback();
   },
 
@@ -34,8 +38,8 @@ var geolocation = {
     }
   },
 
-  addMarker: function(tweet) {
-    var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
+  addMarker: function(tweet, map, options) {
+    var marker = tweet.message ? new L.marker([tweet.lat, tweet.lon],options).addTo(map) : new L.marker([tweet.lat, tweet.lon],options).addTo(map).bindPopup(tweet.message).openPopup;
   },
 
   addAllMarkers: function(markerCoords) {

@@ -48,6 +48,7 @@ textarea {
 
 #inputMap {
   display: none;
+  height: 200px;
 }
 
 .inputButtons {
@@ -105,7 +106,7 @@ textarea {
 }
 
 #mapContainer {
-  display: block;
+  display: none;
   height: 300px;
 }
 
