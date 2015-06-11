@@ -158,15 +158,15 @@ textarea {
 
 #mapContainer {
   display: none;
-  padding: 20px;
+  margin: 20px;
+  padding: 200px;
 }
 
 /*map*/
 
 #map {
-  height: 300px;
+  /*height: 500px;*/
   display: block;
-  height: 300px;
 }
 
 /*claps*/
