@@ -6,8 +6,9 @@
   var socket;
 
   $(document).ready(function () {
-    $("#usernameContainer").hide();
+    // $("#usernameContainer").hide();
   });
+
 
   var loadAllClaps = function() {
 
@@ -21,8 +22,8 @@
     }
 
     $.get('/allClaps', function(data) {
-      var claps = JSON.parse(data);
-      console.log("claps", claps);
+      console.log("gonna sort");
+      var claps = JSON.parse(data).sort(sortClaps);
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {

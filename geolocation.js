@@ -1,5 +1,3 @@
-var map;
-
 var geolocation = {
 
   map: {},
@@ -28,6 +26,8 @@ var geolocation = {
     geolocation.addMarker(geolocation, geolocation.mapinput, {clickable: true, draggable: true});
     geolocation.callback();
   },
+
+
 
   checkCoords: function(tweetObj) {
     if (tweetObj.hasOwnProperty("lat") && tweetObj.hasOwnProperty("lon") && tweetObj.lat !==undefined && tweetObj.lon !==undefined) {

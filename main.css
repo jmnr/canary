@@ -32,15 +32,57 @@ body {
 
 /*clap input*/
 
+#usernameContainer {
+  text-align: center;
+}
+
 #newClap {
+  display: none;
   margin-bottom: 30px;
   text-align: center;
+}
+
+#usernameInput {
+  border: 2px solid black;
+  font-size: 14px;
+  padding: 10px;
+  resize: none;
+  text-align: center;
+  width: 200px;
+}
+
+#submitUsername {
+  background: black;
+  border: 1px solid #101010;
+  color: white;
+  font-size: 14px;
+  height: 40px;
+  padding: 0 10px;
+}
+
+#submitUsername:hover {
+  background: #ffff00;
+  color: black;
+  cursor:pointer;
+}
+
+#denyUsername {
+  font-size: 13px;
+  margin: 0;
+  padding-bottom: 20px;
+  text-decoration: underline;
+}
+
+#denyUsername:hover {
+  color: grey;
+  cursor: pointer;
 }
 
 textarea {
   border: 2px solid black;
   height: 75px;
   font-size: 14px;
+  margin-bottom: 10px;
   padding: 10px;
   resize: none;
   width: 400px;
@@ -75,16 +117,26 @@ textarea {
 }
 
 #submitButton {
+  background: #ffff00;
+  border: 1px solid #101010;
+  color: black;
+  font-size: 14px;
   width: 100px;
+}
+
+#submitButton:hover {
+  background: black;
+  color: white;
+  cursor:pointer;
 }
 
 /*carousel buttons*/
 
-#tab-controls {
+#tabControlsDiv {
   text-align: center;
 }
 
-.buttons {
+.tabButtons {
   background: black;
   border: 1px solid #101010;
   color: white;
@@ -93,7 +145,7 @@ textarea {
   width: 100px;
 }
 
-.buttons:hover {
+.tabButtons:hover {
   background: #ffff00;
   color: black;
   cursor:pointer;
@@ -108,6 +160,8 @@ textarea {
 #mapContainer {
   display: none;
   height: 300px;
+  margin: 20px;
+  padding: 200px;
 }
 
 /*claps*/

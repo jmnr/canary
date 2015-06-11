@@ -29,7 +29,9 @@ We followed these steps to build Canary:
 - [ ] Hash tag functionality (for different programming languages)
 - [ ] Attach geolocation data to every clap
 - [ ] Allow users to select their own location from a map
-- [ ] Display all claps on a map
+- [x] Display all claps on a map
+- [ ] Username functionality
+- [ ] "Validate" button
 
 ##How can you run Canary?
 
