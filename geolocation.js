@@ -18,9 +18,17 @@ var geolocation = {
     console.log("lat:", geolocation.lat);
     console.log("long:", geolocation.lon);
     geolocation.map = L.map('map').setView([geolocation.lat, geolocation.lon], 15);
-    var layer = new L.StamenTileLayer("toner-lite");
-    geolocation.map.addLayer(layer);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'msmichellegar.cc37dd7d',
+        accessToken: 'pk.eyJ1IjoibXNtaWNoZWxsZWdhciIsImEiOiIxZTQyNTY3Y2VmYWIxYzc4NWE2MTk0NGExZGM4MzhmZSJ9.NU0hj0msBW3p9kGKm8Jylw'
+    }).addTo(geolocation.map);
+    // var layer = new L.StamenTileLayer("toner-lite");
+    // geolocation.map.addLayer(layer);
   },
+
+
 
   checkCoords: function(tweetObj) {
     if (tweetObj.hasOwnProperty("lat") && tweetObj.hasOwnProperty("lon") && tweetObj.lat !==undefined && tweetObj.lon !==undefined) {
@@ -32,8 +40,7 @@ var geolocation = {
   },
 
   addMarker: function(tweet) {
-    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map);
-    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map) .bindPopup(tweet.message) .openPopup;
+    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup();
   },
 
   // removeMarker: function(x,y)

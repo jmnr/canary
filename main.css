@@ -30,7 +30,13 @@ body {
 
 /*clap input*/
 
+#usernameContainer {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
 #newClap {
+  display: none;
   margin-bottom: 30px;
   text-align: center;
 }
@@ -49,14 +55,14 @@ textarea {
   display: none;
 }
 
-.locationButtons {
+.inputButtons {
   background: black;
   border: 1px solid #101010;
   color: white;
   font-size: 14px;
 }
 
-.locationButtons:hover {
+.inputButtons:hover {
   background: #ffff00;
   color: black;
   cursor:pointer;
@@ -115,6 +121,7 @@ textarea {
 
 #mapContainer {
   display: none;
+  padding: 20px;
 }
 
 /*map*/

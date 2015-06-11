@@ -66,9 +66,9 @@
     username = document.cookie.split("username=").pop().split(";").shift();
   };
 
-  $(document).ready(function () {
-    $("#usernameContainer").hide();
-  });
+  // $(document).ready(function () {
+  //   $("#usernameContainer").hide();
+  // });
 
   var loadAllClaps = function() {
 
