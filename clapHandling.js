@@ -10,6 +10,7 @@ var timeParser = function (time) {
 };
 
 var addClap = function (data) {
+  // console.log(data.userId, userId);
   if(data.message.indexOf("#") > -1) {
     data.message = hashtags(data.message);
   }
