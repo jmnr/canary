@@ -44,12 +44,15 @@ body {
   width: 400px;
 }
 
+#inputMap {
+  display: none;
+}
+
 .inputButtons {
   background: black;
   border: 1px solid #101010;
   color: white;
   font-size: 14px;
-  width: 100px;
 }
 
 .inputButtons:hover {
@@ -58,16 +61,56 @@ body {
   cursor:pointer;
 }
 
+#locationButtonOne {
+  display:inline-block;
+  width: 150px;
+}
+
+#locationButtonTwo {
+  display: none;
+  width: 150px;
+}
+
+#submitButton {
+  width: 100px;
+}
+
+/*carousel buttons*/
+
+#tab-controls {
+  text-align: center;
+}
+
+.buttons {
+  background: black;
+  border: 1px solid #101010;
+  color: white;
+  display: inline-block;
+  font-size: 14px;
+  width: 100px;
+}
+
+.buttons:hover {
+  background: #ffff00;
+  color: black;
+  cursor:pointer;
+}
+
+/*carousel content*/
+
+#clapContainer {
+  display: block;
+}
+
+#mapContainer {
+  display: none;
+}
+
 /*map*/
 
 #map {
   height: 300px;
   display: block;
-}
-
-#clear {
-  height: 400px;
-  clear: both;
 }
 
 /*claps*/
