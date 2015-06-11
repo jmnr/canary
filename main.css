@@ -31,7 +31,6 @@ body {
 /*clap input*/
 
 #usernameContainer {
-  margin-bottom: 30px;
   text-align: center;
 }
 
@@ -44,11 +43,37 @@ body {
 #usernameInput {
   border: 2px solid black;
   font-size: 14px;
-  margin-bottom: 10px;
   padding: 10px;
   resize: none;
   text-align: center;
   width: 200px;
+}
+
+#submitUsername {
+  background: black;
+  border: 1px solid #101010;
+  color: white;
+  font-size: 14px;
+  height: 40px;
+  padding: 0 10px;
+}
+
+#submitUsername:hover {
+  background: #ffff00;
+  color: black;
+  cursor:pointer;
+}
+
+#denyUsername {
+  font-size: 13px;
+  margin: 0;
+  padding-bottom: 20px;
+  text-decoration: underline;
+}
+
+#denyUsername:hover {
+  color: grey;
+  cursor: pointer;
 }
 
 textarea {
