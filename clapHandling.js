@@ -6,7 +6,6 @@ var hashtags = function (text) {
 };
 
 var addClap = function (data) {
-  console.log(data.userId, userId);
   if(data.message.indexOf("#") > -1) {
     data.message = hashtags(data.message);
   }
@@ -57,4 +56,5 @@ var cookieCheck = function() {
 
   userId = document.cookie.split("userId=").pop().split(";").shift();
   username = document.cookie.split("username=").pop().split(";").shift();
+  console.log("userId=" + userId, "username=" + username);
 };

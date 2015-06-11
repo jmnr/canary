@@ -4,9 +4,10 @@
   var userId;
   var username;
   var socket;
+  var map = {};
 
   $(document).ready(function () {
-    $("#usernameContainer").hide();
+    // $("#usernameContainer").hide();
   });
 
   var loadAllClaps = function() {
@@ -21,11 +22,10 @@
 
     $.get('/allClaps', function(data) {
       var claps = JSON.parse(data);
-      console.log("claps", claps);
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
-        // geolocation.checkCoords(claps[i]);
+        geolocation.checkCoords(claps[i]);
         accessDOM += addClap(claps[i]);
       }
       $("#claps").prepend(accessDOM);
