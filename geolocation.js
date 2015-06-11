@@ -9,9 +9,6 @@ var geolocation = {
       console.log("entered initialize");
       var position  = navigator.geolocation.getCurrentPosition(geolocation.showMap, geolocation.showError);
     }
-    else {
-      console.log("Geolocation not supported");
-    }
     callback();
   },
 
@@ -20,7 +17,7 @@ var geolocation = {
     geolocation.lon = position.coords.longitude;
     console.log("lat:", geolocation.lat);
     console.log("long:", geolocation.lon);
-    geolocation.map = L.map('map').setView([geolocation.lat, geolocation.lon], 60);
+    geolocation.map = L.map('mapContainer').setView([geolocation.lat, geolocation.lon], 15);
     var layer = new L.StamenTileLayer("toner-lite");
     geolocation.map.addLayer(layer);
   },
@@ -51,7 +48,7 @@ var geolocation = {
         case error.TIMEOUT:
             console.log("The request to get user location timed out.");
             break;
-        case error.UNKNOWN_ERROR:
+        case error.UNKNOWN_ERRORkey:
             console.log("An unknown error occurred.");
             break;
     }
