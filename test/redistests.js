@@ -9,7 +9,7 @@ Model.create(testObj, function(obj){
   console.log("#test1 passed");
 });
 
-console.log("#Test 3: check delete method removes the specified tweet from the db");
+console.log("#Test 3: check delete method removes the specified tweet from the database");
 var rem1 = {name: "nikki", time: "1234"};
 Model.delete(rem1.time, function(reply){
   assert.equal(reply, 1);
@@ -17,7 +17,7 @@ Model.delete(rem1.time, function(reply){
 });
 
 
-console.log("#Test 2: check read method retrieves entries from the db (need to update this to the latest entries are first)");
+console.log("#Test 2: check read method retrieves entries from the db in the order in which they were written ");
 var test1 = {name: "nikki", time: "1234"};
 var test2 = {name: "michelle", time: "1235"};
 Model.create(test1, function(){});

@@ -9,10 +9,10 @@ var hub = {
       listeners[event] = [cb];
     }
   },
-  emit: function(event, arg1 , arg2) {
+  emit: function(event, arg1) {
     if(this.listeners.hasOwnProperty(event)) {
       this.listeners[event].forEach(function(fn) {
-        fn(arg1, arg2);
+        fn(arg);
       });
     }
   }
