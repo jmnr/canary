@@ -6,17 +6,14 @@ handlers['POST /addClap'] = function(req, res) {
   var newClap;
 
   req.on('data', function(chunk) {
-    newClap = chunk + ''; //turns clap input box buffer into text
-    if(newClap.indexOf("<") > -1) {
-      newClap = newClap.replace("<", "&lt");
-    }
-    if(newClap.indexOf(">") > -1) {
-      newClap = newClap.replace(">", "&gt");
+    newClap = chunk;
+    if(newClap.message.indexOf("<") > -1 || newClap.message.indexOf(">") > -1) {
+      newClap.message = newClap.message.replace(/</g, "&lt").replace(/>/g, "&gt");
     }
   });
+
   req.on('end', function() {
     newClap = JSON.parse(newClap);
-    newClap.cookie = req.headers.cookie.split('=')[1];
     redisCrd.create(newClap, res);
   });
 };
