@@ -9,14 +9,15 @@ var hub = {
       listeners[event] = [cb];
     }
   },
-  emit: function(event, arg1) {
+  emit: function(event, arg1, arg2, arg3) {
     if(this.listeners.hasOwnProperty(event)) {
       this.listeners[event].forEach(function(fn) {
-        fn(arg);
+        fn(arg1, arg2, arg3);
       });
     }
   }
 };
+
 
 // coords receievd
 // -
