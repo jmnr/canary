@@ -8,7 +8,7 @@ io.on('connection', function(socket){
   socket.on('new clap', function (clapData) {
     io.emit('new clap', clapData);
   });
-  
+
   socket.on('delete clap', function (clapId) {
     io.emit('delete clap', clapId);
   });

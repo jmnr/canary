@@ -12,13 +12,18 @@
   </head>
   <body>
     <div id="content">
+      <!-- <div id="qunit"></div>
+      <div id="qunit-fixture"></div> -->
 
-      <div id="header"><img src="images/canarybanner.png"></div>
+      <div id="header"><img src="https://dl.dropboxusercontent.com/u/297682547/CANAREE%20(3).png"></div>
 
       <div id="addContainer">
         <div id="newClap">
-          <textarea id="newClapInput" maxlength="141"></textarea>
+          <textarea id="newClapInput" maxlength="141" placeholder="Watcha wanna brag about?"></textarea>
+          <div id="inputMap"><img src="http://i.telegraph.co.uk/multimedia/archive/02830/cat_2830677b.jpg"></div>
           <div>
+            <button id="locationButtonOne" class="inputButtons" value="Add Location" onclick="clickLocationButton(1)">ADD LOCATION</button>
+            <button id="locationButtonTwo" class="inputButtons" value="Add Location" onclick="clickLocationButton(2)">ADD LOCATION</button>
             <button id="submitButton" class="inputButtons" value="Submit">CLAP</button>
           </div>
         </div>
@@ -32,20 +37,27 @@
         </div>
       </div>
 
-      <!-- <div id="map"><div> -->
-      <!-- <div id="clear"></div> -->
-      <div id="clapContainer">
-        <div id="claps">
+      <div id="tab-controls">
+        <button id="toFeed" class="buttons" value="FEED" onclick="toggleSlide(1)">FEED</button>
+        <button id="toMap" class="buttons" value="MAP" onclick="toggleSlide(0)">MAP</button>
+      </div>
+
+      <div id="clapContent">
+        <div id="clapContainer" class="tabs">
+          <div id="claps"></div>
+        </div>
+        <div id="mapContainer" class="tabs">
+          <div id="map"></div>
         </div>
       </div>
 
     </div>
 
-    <!-- <div id="qunit"></div>
-    <div id="qunit-fixture"></div>
     <script src="//code.jquery.com/qunit/qunit-1.18.0.js"></script>
-    <script src="/test/tests.js"></script> -->
+    <script src="/test/frontEndTest.js"></script>
+    <script src="/test/geolocationtests.js"></script>
 
+    <script language="JavaScript" type="text/javascript" src="toggle.js"></script>
     <script language="JavaScript" type="text/javascript" src="hub.js"></script>
     <script language="JavaScript" type="text/javascript" src="geolocation.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>

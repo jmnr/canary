@@ -70,7 +70,7 @@
     $("#usernameContainer").hide();
   });
 
-  window.onload = function() {
+  var loadAllClaps = function() {
 
     socket = io();
 
@@ -85,7 +85,7 @@
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
-        // geolocation.checkCoords(claps[i]);
+        geolocation.checkCoords(claps[i]);
         accessDOM += addClap(claps[i]);
       }
       $("#claps").prepend(accessDOM);
@@ -104,6 +104,8 @@
     });
   };
 
+  window.onload = geolocation.initialize(loadAllClaps);
+
   $('#submitButton').click(function() {
     var clapData = {};
     clapData.userId = userId = document.cookie.split("userId=").pop().split(";").shift();
@@ -117,7 +119,7 @@
       $.post( '/addClap', JSON.stringify(clapData), function(data) {
         var newClap = JSON.parse(data);
         socket.emit('new clap', data);
-        // geolocation.checkCoords(newClap); //change name of checkcoords to be more descriptive
+        geolocation.checkCoords(newClap); //change name of checkcoords to be more descriptive
       });
 
       $('#newClapInput').val('');
