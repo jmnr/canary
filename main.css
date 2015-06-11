@@ -41,6 +41,16 @@ body {
   text-align: center;
 }
 
+#usernameInput {
+  border: 2px solid black;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 10px;
+  resize: none;
+  text-align: center;
+  width: 200px;
+}
+
 textarea {
   border: 2px solid black;
   height: 75px;
