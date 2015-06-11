@@ -94,11 +94,15 @@
 
     if(clapData.message.length > 0) {
 
-      if(clapData.message.indexOf("<") > -1) {
-        clapData.message = clapData.message.replace("<", "&lt");
-      }
-      if(clapData.message.indexOf(">") > -1) {
-        clapData.message = clapData.message.replace(">", "&gt");
+      // if(clapData.message.indexOf("<") > -1) {
+      //   clapData.message = clapData.message.replace("<", "&lt");
+      // }
+      // if(clapData.message.indexOf(">") > -1) {
+      //   clapData.message = clapData.message.replace(">", "&gt");
+      // }
+      
+      if(clapData.message.indexOf("<") > -1 || clapData.message.indexOf(">") > -1) {
+        return;
       }
 
       $.post( '/addClap', JSON.stringify(clapData), function(data) {
