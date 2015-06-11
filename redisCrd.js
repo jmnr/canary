@@ -2,7 +2,7 @@ var redis = require("redis");
 var geolocation = require("./geolocation.js");
 
 //local
-var client = redis.createClient();
+// var client = redis.createClient();
 //local
 
 // //heroku
