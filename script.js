@@ -4,7 +4,6 @@
   var userId;
   var username;
   var socket;
-  var map = {};
 
   $(document).ready(function () {
     // $("#usernameContainer").hide();
@@ -23,7 +22,8 @@
     }
 
     $.get('/allClaps', function(data) {
-      var claps = JSON.parse(data);
+      console.log("gonna sort");
+      var claps = JSON.parse(data).sort(sortClaps);
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
@@ -32,7 +32,6 @@
         accessDOM += addClap(claps[i]);
       }
       $("#claps").prepend(accessDOM);
-      console.log(markerCoords);
       // geolocation.addAllMarkers(markerCoords);
     });
 

@@ -2,7 +2,7 @@ var routing = require('./router.js')({connection: require('redis')});
 
 var http = require("http").createServer(routing.router);
 var io = require('socket.io')(http);
-                         
+  
 http.listen(process.env.PORT || 8000); //on heroku server may not be 8k so use whatever it says
 
 io.on('connection', function(socket){
