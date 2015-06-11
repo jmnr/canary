@@ -10,7 +10,7 @@ function toggleSlide (num) {
 
 function clickLocationButton (num) {
   if (num === 1) {
-    addRemoveInputMap("inline-block");
+    addRemoveInputMap("block");
     addRemoveSubmitButton("none");
     swapLocationButtons(num);
   } else {
