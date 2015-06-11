@@ -1,7 +1,4 @@
-var handlers = require('./handlers.js');
-// do we need to require handlers in the server?
 var serverHandler = require('./serverHandler.js');
-
 var http = require("http").createServer(serverHandler);
 var io = require('socket.io')(http);
 

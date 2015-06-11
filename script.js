@@ -80,7 +80,6 @@
         var clapAdd = data.userId === cookie ? $(addUserClap(data)) : $(addClap(data));
         clapAdd.hide().prependTo("#claps").fadeIn("slow");
       });
-
       socket.on('delete clap', function(clapId){ //socket listener
         $("#" + clapId).fadeOut("slow", function() {
           $("#" + clapId).remove();
@@ -91,7 +90,6 @@
 
   window.onload = geolocation.initialize(loadAllClaps);
 
-
   $('#submitButton').click(function() {
     var clapData = {};
     clapData.message = $('#newClapInput').val();
@@ -101,11 +99,15 @@
 
     if(clapData.message.length > 0) {
 
-      if(clapData.message.indexOf("<") > -1) {
-        clapData.message = clapData.message.replace("<", "&lt");
-      }
-      if(clapData.message.indexOf(">") > -1) {
-        clapData.message = clapData.message.replace(">", "&gt");
+      // if(clapData.message.indexOf("<") > -1) {
+      //   clapData.message = clapData.message.replace("<", "&lt");
+      // }
+      // if(clapData.message.indexOf(">") > -1) {
+      //   clapData.message = clapData.message.replace(">", "&gt");
+      // }
+
+      if(clapData.message.indexOf("<") > -1 || clapData.message.indexOf(">") > -1) {
+        return;
       }
 
       $.post( '/addClap', JSON.stringify(clapData), function(data) {
