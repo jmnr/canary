@@ -27,7 +27,7 @@ Shot.inject(handle['POST /addClap'], { headers: {cookie: '12345=12345' }, method
 console.log("#test 9 test for guarding against script injections in the POST endpoint");
 Shot.inject(handle['POST /addClap'], { headers: {cookie: '12345=12345' }, method: 'POST', url: '/addClap', payload: JSON.stringify(testObj3) }, function (res) {
       var response = JSON.parse(res.payload);
-      assert.equal(response.message, '&ltscript&gtHello</script>');
+      assert.equal(response.message, '&ltscript&gtHello&lt/script&gt');
       console.log("test 9 passed");
 });
 

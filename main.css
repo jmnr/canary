@@ -37,7 +37,7 @@ body {
   text-align: center;
 }
 
-#newClapInput {
+textarea {
   border: 2px solid black;
   height: 75px;
   font-size: 14px;

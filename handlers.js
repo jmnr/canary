@@ -13,17 +13,13 @@ function handlers(config) {
 
       req.on('data', function(chunk) {
         newClap = chunk + ''; //turns clap input box buffer into text
-        if(newClap.indexOf("<") > -1) {
-          newClap = newClap.replace("<", "&lt");
+        if(newClap.indexOf("<") > -1 || newClap.indexOf(">") > -1) {
+          newClap = newClap.replace(/</g, "&lt").replace(/>/g, "&gt");
         }
-        if(newClap.indexOf(">") > -1) {
-          newClap = newClap.replace(">", "&gt");
-        }
-        // console.log("newClap:", newClap);
       });
+
       req.on('end', function() {
         newClap = JSON.parse(newClap);
-        newClap.userId = req.headers.cookie.split('=')[1];
         newClap.time = new Date().getTime();
         Model.create(newClap, function(clap) {
           res.writeHead(200, "OK", {'Content-Type': 'text/html'});

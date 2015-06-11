@@ -18,8 +18,8 @@ var geolocation = {
     console.log("lat:", geolocation.lat);
     console.log("long:", geolocation.lon);
     geolocation.map = L.map('mapContainer').setView([geolocation.lat, geolocation.lon], 15);
-    var layer = new L.StamenTileLayer("toner-lite");
-    geolocation.map.addLayer(layer);
+    // var layer = new L.StamenTileLayer("toner-lite");
+    // geolocation.map.addLayer(layer);
   },
 
   checkCoords: function(tweetObj) {
