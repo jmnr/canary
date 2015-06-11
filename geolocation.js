@@ -35,7 +35,7 @@ var geolocation = {
   },
 
   addMarker: function(tweet) {
-    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map) .bindPopup(tweet.message) .openPopup;
+    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
   },
 
   // removeMarker: function(x,y)

@@ -18,10 +18,8 @@ var hub = {
   }
 };
 
-
-
 // coords receievd
-// - 
+// -
 // page load
 //   listeners
 //     - get coords from browser
