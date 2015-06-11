@@ -7,8 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/test.js",
-    "coverage": "istanbul cover test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 10 --functions 10 --lines 10 --branches 10",
+    "test": "node test/*.js",
+    "coverage": "./node_modules/.bin/istanbul cover test/*.js && ./node_modules/.bin/istanbul check-coverage --statements 90 --functions 100 --lines 90 --branches 90",
     "nocov": "node test/*.js",
     "codeclimate": "CODECLIMATE_REPO_TOKEN=08ea06a96d84eb645b326dbfc18acc18ff04faccd655324136251a2fbba296e2 ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info",
     "start": "node server.js",
@@ -28,7 +28,8 @@
   "homepage": "https://github.com/jmnr/canary",
   "devDependencies": {
     "codeclimate-test-reporter": "0.0.4",
-    "shot": "^1.5.0"
+    "shot": "^1.5.0",
+    "fakeredis": "0.3.1"
   },
   "pre-commit": [
     "jshint",

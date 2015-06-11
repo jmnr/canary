@@ -7,7 +7,7 @@ var geolocation = {
   initialize: function(callback) {
     if (navigator.geolocation) {
       console.log("entered initialize");
-      var position  = navigator.geolocation.getCurrentPosition(geolocation.showMap, geolocation.showError)
+      var position  = navigator.geolocation.getCurrentPosition(geolocation.showMap, geolocation.showError);
     }
     callback();
   },
@@ -17,9 +17,9 @@ var geolocation = {
     geolocation.lon = position.coords.longitude;
     console.log("lat:", geolocation.lat);
     console.log("long:", geolocation.lon);
-    geolocation.map = L.map('map').setView([geolocation.lat, geolocation.lon], 15);
-    var layer = new L.StamenTileLayer("toner-lite");
-    geolocation.map.addLayer(layer);
+    geolocation.map = L.map('mapContainer').setView([geolocation.lat, geolocation.lon], 15);
+    // var layer = new L.StamenTileLayer("toner-lite");
+    // geolocation.map.addLayer(layer);
   },
 
   checkCoords: function(tweetObj) {
@@ -32,8 +32,7 @@ var geolocation = {
   },
 
   addMarker: function(tweet) {
-    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map);
-    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map) .bindPopup(tweet.message) .openPopup;
+    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
   },
 
   // removeMarker: function(x,y)
@@ -49,8 +48,8 @@ var geolocation = {
         case error.TIMEOUT:
             console.log("The request to get user location timed out.");
             break;
-        case error.UNKNOWN_ERROR:
-            console.log("An unknown error occurred.")
+        case error.UNKNOWN_ERRORkey:
+            console.log("An unknown error occurred.");
             break;
     }
   },
