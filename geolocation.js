@@ -23,6 +23,8 @@ var geolocation = {
     geolocation.callback();
   },
 
+
+
   checkCoords: function(tweetObj) {
     if (tweetObj.hasOwnProperty("lat") && tweetObj.hasOwnProperty("lon") && tweetObj.lat !==undefined && tweetObj.lon !==undefined) {
       console.log("coordinates present");

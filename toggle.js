@@ -1,3 +1,9 @@
+function switchToClapInput (num) {
+  var elements = document.getElementsByClassName("inputContainers");
+  elements[0].style.display = "none";
+  elements[1].style.display = "block";
+}
+
 function toggleSlide (num) {
   var elements = document.getElementsByClassName("tabs");
   elements[num].style.display = "none";
@@ -10,7 +16,7 @@ function toggleSlide (num) {
 
 function clickLocationButton (num) {
   if (num === 1) {
-    addRemoveInputMap("inline-block");
+    addRemoveInputMap("block");
     addRemoveSubmitButton("none");
     swapLocationButtons(num);
   } else {
