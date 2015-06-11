@@ -17,7 +17,7 @@ test("addRemoveInputMap('none') adds map to the page", function () {
   equal(inputMap, 'none', 'addInputMap adds map');
 });
 
-test("addRemoveSubmitButton('none') removes submit clap button from page", function () {
+test("addRemoveSubmitButton('none') removes submit brag button from page", function () {
   addRemoveSubmitButton('none');
   clapButton = getComputedStyle(document.getElementById('submitButton'), null).display;
   equal(clapButton, 'none', 'addInputMap removes submitButton');

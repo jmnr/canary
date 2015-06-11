@@ -9,6 +9,7 @@
     // $("#usernameContainer").hide();
   });
 
+
   var loadAllClaps = function() {
 
     socket = io();
