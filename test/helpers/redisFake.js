@@ -1,12 +1,12 @@
-module.exports = function () {
-
-
-  return {
-
-    scan: function(query, cb) {
-
-      return 
-    }
-  }
-
-}
+// module.exports = function () {
+//
+//
+//   return {
+//
+//     scan: function(query, cb) {
+//
+//       return
+//     }
+//   }
+// 
+// }
