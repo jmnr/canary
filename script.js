@@ -13,6 +13,7 @@
   var loadAllClaps = function() {
 
     socket = io();
+    var markerCoords = [];
 
     cookieCheck(); //if they have no username, add null and if they have no userId, add one
 
@@ -25,10 +26,13 @@
       var accessDOM = '';
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
-        geolocation.checkCoords(claps[i]);
+        markerCoords.push(claps[i]);
+        geolocation.addMarker(claps[i]);
         accessDOM += addClap(claps[i]);
       }
       $("#claps").prepend(accessDOM);
+      console.log(markerCoords);
+      // geolocation.addAllMarkers(markerCoords);
     });
 
     socket.on('new clap', function(data){ //socket listener

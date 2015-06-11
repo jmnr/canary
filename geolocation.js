@@ -5,11 +5,11 @@ var geolocation = {
   lon: undefined,
 
   initialize: function(callback) {
+    geolocation.callback = callback;
     if (navigator.geolocation) {
       console.log("entered initialize");
       var position  = navigator.geolocation.getCurrentPosition(geolocation.showMap, geolocation.showError);
     }
-    callback();
   },
 
   showMap: function(position) {
@@ -19,7 +19,8 @@ var geolocation = {
     console.log("long:", geolocation.lon);
     geolocation.map = L.map('mapContainer').setView([geolocation.lat, geolocation.lon], 15);
     var layer = new L.StamenTileLayer("toner-lite");
-    // geolocation.map.addLayer(layer);
+    geolocation.map.addLayer(layer);
+    geolocation.callback();
   },
 
   checkCoords: function(tweetObj) {
@@ -32,7 +33,18 @@ var geolocation = {
   },
 
   addMarker: function(tweet) {
-    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
+    var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
+  },
+
+  addAllMarkers: function(markerCoords) {
+    // var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
+    var markerArray = [];
+    markerCoords.forEach(function(element) {
+      markerArray.push(L.marker(element).addTo(geolocation.map));
+      // .bindPopup(tweet.message).openPopup);
+    });
+    var group = L.featureGroup(markerArray).addTo(geolocation.map);
+    geolocation.map.fitBounds(group.getBounds());
   },
 
   // removeMarker: function(x,y)
