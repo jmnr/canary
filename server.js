@@ -1,4 +1,5 @@
 var handlers = require('./handlers.js');
+// do we need to require handlers in the server?
 var serverHandler = require('./serverHandler.js');
 
 var http = require("http").createServer(serverHandler);
@@ -10,7 +11,7 @@ io.on('connection', function(socket){
   socket.on('new clap', function (clapData) {
     io.emit('new clap', clapData);
   });
-  
+
   socket.on('delete clap', function (clapId) {
     io.emit('delete clap', clapId);
   });

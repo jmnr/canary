@@ -52,45 +52,44 @@
     return "userId=" + userId + "; expires=Fri, 18 Dec 2015 12:00:00 UTC";
   };
 
-  window.onload = function() {
-    socket = io();
+  var loadAllClaps = function() {
 
-    if(!document.cookie) {
-      document.cookie = addCookie();
-    }
+    window.onload = function() {
+      socket = io();
 
-    cookie = document.cookie.split('userId=')[1];
-
-    $.get('/allClaps', function(data) {
-      var claps = JSON.parse(data);
-      var accessDOM = '';
-      var clapLoad = claps.length > 50 ? 50 : claps.length;
-      for(var i = 0 ; i < clapLoad; i++) {
-        // geolocation.checkCoords(claps[i]);
-        accessDOM +=
-          cookie === claps[i].userId ? addUserClap(claps[i]) : addClap(claps[i]);
+      if(!document.cookie) {
+        document.cookie = addCookie();
       }
-      $("#claps").prepend(accessDOM);
-    });
 
-    socket.on('new clap', function(data){ //socket listener
-      data = JSON.parse(data);
-      var clapAdd = data.userId === cookie ? $(addUserClap(data)) : $(addClap(data));
-      clapAdd.hide().prependTo("#claps").fadeIn("slow");
-    });
+      cookie = document.cookie.split('userId=')[1];
 
-    socket.on('delete clap', function(clapId){ //socket listener
-      $("#" + clapId).fadeOut("slow", function() {
-        $("#" + clapId).remove();
+      $.get('/allClaps', function(data) {
+        var claps = JSON.parse(data);
+        var accessDOM = '';
+        var clapLoad = claps.length > 50 ? 50 : claps.length;
+        for(var i = 0 ; i < clapLoad; i++) {
+          geolocation.checkCoords(claps[i]);
+          accessDOM +=
+            cookie === claps[i].userId ? addUserClap(claps[i]) : addClap(claps[i]);
+        }
+        $("#claps").prepend(accessDOM);
       });
-    });
+
+      socket.on('new clap', function(data){ //socket listener
+        data = JSON.parse(data);
+        var clapAdd = data.userId === cookie ? $(addUserClap(data)) : $(addClap(data));
+        clapAdd.hide().prependTo("#claps").fadeIn("slow");
+      });
+
+      socket.on('delete clap', function(clapId){ //socket listener
+        $("#" + clapId).fadeOut("slow", function() {
+          $("#" + clapId).remove();
+        });
+      });
+    };
   };
 
-  // var getAllClaps = function() {
-  //   all window onload functions
-  //   });
-
-  // window.onload = geolocation.initialize(getAllClaps);
+  window.onload = geolocation.initialize(loadAllClaps);
 
 
   $('#submitButton').click(function() {
@@ -98,6 +97,7 @@
     clapData.message = $('#newClapInput').val();
     clapData.lat = geolocation.lat;
     clapData.lon = geolocation.lon;
+    // console.log( clapData.lat );
 
     if(clapData.message.length > 0) {
 
@@ -111,8 +111,9 @@
       $.post( '/addClap', JSON.stringify(clapData), function(data) {
         var newClap = JSON.parse(data);
         console.log("clap received from post request:", newClap);
+        geolocation.checkCoords(newClap); //change name of checkcoords to be more descriptive
         socket.emit('new clap', data);
-        // geolocation.checkCoords(newClap); //change name of checkcoords to be more descriptive
+
       });
 
       $('#newClapInput').val('');
