@@ -5,6 +5,10 @@ var hashtags = function (text) {
     });
 };
 
+var timeParser = function (time) {
+  return time.toLocaleDateString() + " " + time.getHours() + ":" + time.getMinutes();
+};
+
 var addClap = function (data) {
   if(data.message.indexOf("#") > -1) {
     data.message = hashtags(data.message);
@@ -13,20 +17,22 @@ var addClap = function (data) {
   var out = '<div id="' + data.time + '" class="clap">' +
     '<p>' + data.message + '</p>';
 
-  out += username !== "###" ? '<p>By ' + data.username + '</p>' : '';
+  out += username !== "###" ? '<p>by ' + data.username + '</p>' : '';
   out += userId === data.userId ? '<button class="delButtons">x</button>' : '';
 
-  return out + '<p>' + new Date(Number(data.time)).toString() + '</p>' + '</div>';
+  return out + '<p>posted on ' + timeParser(new Date(Number(data.time))) + '</p>' + '</div>';
 };
 
-var sortClaps = function(claps) { //sorts claps by timestamp
-  return claps.sort(function (a, b) {
-    if (a.time < b.time)
-      return 1;
-    if (a.time > b.time)
-      return -1;
-    return 0;
-  });
+var sortClaps = function (a, b) {
+  var aTime = Number(a.time);
+  var bTime = Number(b.time);
+  if (aTime > bTime) {
+    return 1;
+  }
+  if (aTime < bTime) {
+    return -1;
+  }
+  return 0;
 };
 
 var addCookie = function() {
