@@ -5,11 +5,11 @@ var geolocation = {
   lon: undefined,
 
   initialize: function(callback) {
+    geolocation.callback = callback;
     if (navigator.geolocation) {
       console.log("entered initialize");
-      var position  = navigator.geolocation.getCurrentPosition(geolocation.showMap, geolocation.showError)
+      var position  = navigator.geolocation.getCurrentPosition(geolocation.showMap, geolocation.showError);
     }
-    callback();
   },
 
   showMap: function(position) {
@@ -17,15 +17,10 @@ var geolocation = {
     geolocation.lon = position.coords.longitude;
     console.log("lat:", geolocation.lat);
     console.log("long:", geolocation.lon);
-    geolocation.map = L.map('map').setView([geolocation.lat, geolocation.lon], 15);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        maxZoom: 18,
-        id: 'msmichellegar.cc37dd7d',
-        accessToken: 'pk.eyJ1IjoibXNtaWNoZWxsZWdhciIsImEiOiIxZTQyNTY3Y2VmYWIxYzc4NWE2MTk0NGExZGM4MzhmZSJ9.NU0hj0msBW3p9kGKm8Jylw'
-    }).addTo(geolocation.map);
-    // var layer = new L.StamenTileLayer("toner-lite");
-    // geolocation.map.addLayer(layer);
+    geolocation.map = L.map('mapContainer').setView([geolocation.lat, geolocation.lon], 15);
+    var layer = new L.StamenTileLayer("toner-lite");
+    geolocation.map.addLayer(layer);
+    geolocation.callback();
   },
 
 
@@ -40,7 +35,18 @@ var geolocation = {
   },
 
   addMarker: function(tweet) {
-    var marker = L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup();
+    var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
+  },
+
+  addAllMarkers: function(markerCoords) {
+    // var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
+    var markerArray = [];
+    markerCoords.forEach(function(element) {
+      markerArray.push(L.marker(element).addTo(geolocation.map));
+      // .bindPopup(tweet.message).openPopup);
+    });
+    var group = L.featureGroup(markerArray).addTo(geolocation.map);
+    geolocation.map.fitBounds(group.getBounds());
   },
 
   // removeMarker: function(x,y)
@@ -56,8 +62,8 @@ var geolocation = {
         case error.TIMEOUT:
             console.log("The request to get user location timed out.");
             break;
-        case error.UNKNOWN_ERROR:
-            console.log("An unknown error occurred.")
+        case error.UNKNOWN_ERRORkey:
+            console.log("An unknown error occurred.");
             break;
     }
   },
