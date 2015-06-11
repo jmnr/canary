@@ -26,10 +26,10 @@ var addClap = function (data) {
 var sortClaps = function (a, b) {
   var aTime = Number(a.time);
   var bTime = Number(b.time);
-  if (aTime > bTime) {
+  if (aTime < bTime) {
     return 1;
   }
-  if (aTime < bTime) {
+  if (aTime > bTime) {
     return -1;
   }
   return 0;
