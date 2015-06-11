@@ -37,10 +37,6 @@
     });
   };
 
-  var scriptProtect = function(text) {
-    return text.replace(">", "&gt").replace("<", "&lt");
-  };
-
   var addCookie = function() {
     var userId = "";
     var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -117,10 +113,6 @@
     clapData.lon = geolocation.lon;
 
     if(clapData.message.length > 0) {
-
-      if(clapData.message.indexOf("<") > -1 || clapData.message.indexOf(">") > -1) {
-        clapData.message = scriptProtect(clapData.message);
-      }
 
       $.post( '/addClap', JSON.stringify(clapData), function(data) {
         var newClap = JSON.parse(data);

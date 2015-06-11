@@ -6,9 +6,9 @@ handlers['POST /addClap'] = function(req, res) {
   var newClap;
 
   req.on('data', function(chunk) {
-    newClap = chunk;
-    if(newClap.message.indexOf("<") > -1 || newClap.message.indexOf(">") > -1) {
-      newClap.message = newClap.message.replace(/</g, "&lt").replace(/>/g, "&gt");
+    newClap = chunk + '';
+    if(newClap.indexOf("<") > -1 || newClap.indexOf(">") > -1) {
+      newClap = newClap.replace(/</g, "&lt").replace(/>/g, "&gt");
     }
   });
 
