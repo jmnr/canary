@@ -3,6 +3,7 @@ var fs = require('fs');
 var index = fs.readFileSync(__dirname + '/index.html');
 
 function routing(config) {
+  "use strict";
   handlers = handlers(config);
   return {
     router: function (req, res){

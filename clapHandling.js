@@ -5,20 +5,17 @@ var hashtags = function (text) {
     });
 };
 
-var serverGrab = function() {
+var serverGrab = function(mapName) {
   $.get('/allClaps', function(data) {
     var claps = JSON.parse(data).sort(sortClaps);
     var accessDOM = '';
     var clapLoad = claps.length > 50 ? 50 : claps.length;
     for(var i = 0 ; i < clapLoad; i++) {
-      // markerCoords.push(claps[i]);
-      // geolocation.addMarker(claps[i], geolocation.map);
       accessDOM += addClap(claps[i]);
     }
     $("#claps").html(accessDOM);
     $("#claps").fadeIn("slow");
-    // console.log(markerCoords);
-    // geolocation.addAllMarkers(markerCoords);
+
   });
 };
 

@@ -1,6 +1,8 @@
 var redisAdaptor = function (config) {
+  "use strict";
 
   var redis = config.connection;
+  var client;
 
   if (process.env.REDISCLOUD_URL) {
     var url = require('url');
