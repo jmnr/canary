@@ -34,8 +34,8 @@ var addClap = function (data) {
   var out = '<div id="' + data.time + '" class="clap">' +
     '<p>' + data.message + '</p>';
 
-  out += username !== "###" ? '<p>by ' + data.username + '</p>' : '';
-  out += userId === data.userId ? '<button class="delButtons">x</button>' : '';
+  out += data.username !== "###" ? '<p>by ' + data.username + '</p>' : '';
+  out += data.userId === userId ? '<button class="delButtons">x</button>' : '';
 
   return out + '<p>posted on ' + timeParser(new Date(Number(data.time))) + '</p>' + '</div>';
 };
