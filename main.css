@@ -172,8 +172,7 @@ textarea {
 }
 
 #mapContainer {
-  display: none;
-  height: 300px;
+  height: 180px;
   margin: 20px;
   padding: 200px;
 }

@@ -6,11 +6,13 @@
   var username;
   var socket;
   var markerCoords;
+  var mapLoaded = false;
 
   $(document).ready(function () {
     $("#usernameContainer").hide();
     $("#newClap").hide();
-    $("#mapContainer").hide();
+    $("#clapContainer").hide();
+    // $("#mapContainer").hide();
 
     if(needsUsername()) {
       $("#usernameContainer").fadeIn("slow");
@@ -19,26 +21,9 @@
     }
   });
 
-  $("#locationButtonOne").click(function() {
-    $("#submitButton").hide();
-    $("#locationButtonOne").hide();
-    $("#locationButtonTwo").fadeIn();
-    $("#inputMap").fadeIn();
-    $("#clearUsernameButton").hide();
-  });
-
-  $("#locationButtonTwo").click(function() {
-    $("#submitButton").fadeIn();
-    $("#locationButtonOne").fadeIn();
-    $("#locationButtonTwo").hide();
-    $("#inputMap").hide();
-    $("#clearUsernameButton").fadeIn();
-  });
-
-  var loadAllClaps = function() {
-
+  window.onload = function () {
+    hub.emit("page loaded", null);
     socket = io();
-    markerCoords = [];
 
     cookieCheck(); //if they have no username, add null and if they have no userId, add one
 
@@ -48,6 +33,7 @@
       data = JSON.parse(data);
       var clapAdd = $(addClap(data));
       clapAdd.hide().prependTo("#claps").fadeIn("slow");
+      // hub.emit("new clap", data, mapName);
     });
 
     socket.on('delete clap', function(clapId){ //socket listener
@@ -57,28 +43,41 @@
     });
   };
 
-  window.onload = loadAllClaps();//geolocation.initialize(loadAllClaps);
 
   $('#submitButton').click(function() {
-    var clapData = {
-      userId: document.cookie.split("userId=").pop().split(";").shift(),
-      username: document.cookie.split("username=").pop().split(";").shift(),
-      message: $('#newClapInput').val(),
-      lat: geolocation.lat,
-      lon: geolocation.lon
-    };
+    if($('#newClapInput').val().length > 0) {
+        var clapData = {
+          userId: document.cookie.split("userId=").pop().split(";").shift(),
+          username: document.cookie.split("username=").pop().split(";").shift(),
+          message: $('#newClapInput').val(),
+          lat: geolatitude,
+          lon: geolongitude
+        };
 
-    if(clapData.message.length > 0) {
-      $.post( '/addClap', JSON.stringify(clapData), function(data) {
-        var newClap = JSON.parse(data);
-        socket.emit('new clap', data);
-        geolocation.checkCoords(newClap); //change name of checkcoords to be more descriptive
-      });
+        $.post( '/addClap', JSON.stringify(clapData), function(data) {
+          var newClap = JSON.parse(data);
+          socket.emit('new clap', data);
+          // hub.emit("new clap", data, mapName);
+        });
 
-      $('#newClapInput').val('');
-    } else {
-      alert("Provide your egotistical ramblings in the text box.");
-    }
+        $('#newClapInput').val('');
+
+      } else {
+        alert("Provide your egotistical ramblings in the text box.");
+      }
+  });
+
+  //// map load listener
+  hub.listen("main map loaded", function() {
+    $.get('/allClaps', function(data) {
+      var claps = JSON.parse(data);
+      var clapLoad = claps.length > 50 ? 50 : claps.length;
+      for(var i = 0 ; i < clapLoad; i++) {
+        hub.emit("new clap", claps[i]);
+      }
+      mapLoaded = true;
+      $("#mapContainer").fadeIn("slow");
+    });
   });
 
   $('#submitUsername').click(function() {
@@ -159,8 +158,8 @@
         var accessDOM = '';
         var clapLoad = claps.length > 50 ? 50 : claps.length;
         for(var i = 0 ; i < clapLoad; i++) {
-          markerCoords.push(claps[i]);
-          // geolocation.addMarker(claps[i], geolocation.map);
+          // markerCoords.push(claps[i]);
+          // hub.emit("new clap", claps[i], mapName);  //
           accessDOM += addClap(claps[i]);
         }
         $("#claps").fadeOut("slow", function() {
@@ -183,4 +182,5 @@
       socket.emit('delete clap', clapId);
     });
   });
+
 }());
