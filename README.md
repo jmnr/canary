@@ -26,12 +26,12 @@ We followed these steps to build Canary:
 - [x] Move Tweets to Redis
 - [x] Deploy to Heroku
 - [x] Add real-time updates of tweets with Socket.io
-- [ ] Hash tag functionality (for different programming languages)
-- [ ] Attach geolocation data to every clap
+- [x] Hash tag functionality (for different programming languages)
+- [x] Attach geolocation data to every clap
 - [ ] Allow users to select their own location from a map
 - [x] Display all claps on a map
-- [ ] Username functionality
-- [ ] "Validate" button
+- [x] Username functionality
+- [ ] "Impressed" button
 
 ##How can you run Canary?
 
