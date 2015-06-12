@@ -41,39 +41,32 @@
         $("#" + clapId).remove();
       });
     });
-};
+  };
 
 
   $('#submitButton').click(function() {
-  var clapData = {
-    userId: document.cookie.split("userId=").pop().split(";").shift(),
-    username: document.cookie.split("username=").pop().split(";").shift(),
-    message: $('#newClapInput').val(),
-    lat: geolatitude,
-    lon: geolongitude
-  };
-  //
-  // hub.emit("coords needed");
-  // hub.listen("coords sent", function(lat, lon) {
-  //   console.log("lat recieved", lat);
-  //   console.log("lon recieved", lon);
-  //   clapData.lat = lat;
-  //   clapData.lon = lon;
-    console.log("claps", clapData);
-    if(clapData.message.length > 0) {
+    if($('#newClapInput').val().length > 0) {
+        var clapData = {
+          userId: document.cookie.split("userId=").pop().split(";").shift(),
+          username: document.cookie.split("username=").pop().split(";").shift(),
+          message: $('#newClapInput').val(),
+          lat: geolatitude,
+          lon: geolongitude
+        };
 
-      $.post( '/addClap', JSON.stringify(clapData), function(data) {
-        var newClap = JSON.parse(data);
-        socket.emit('new clap', data);
-        hub.emit("new clap", newClap);
-      });
+        $.post( '/addClap', JSON.stringify(clapData), function(data) {
+          var newClap = JSON.parse(data);
+          socket.emit('new clap', data);
+          hub.emit("new clap", newClap);
+        });
 
-      $('#newClapInput').val('');
-    } else {
-      alert("Provide your egotistical ramblings in the text box.");
-    }
-  // });
-});
+        $('#newClapInput').val('');
+
+      } else {
+        alert("Provide your egotistical ramblings in the text box.");
+      }
+  });
+
 
   //// map load listener
   hub.listen("main map loaded", function() {
@@ -81,7 +74,6 @@
       var claps = JSON.parse(data);
       var clapLoad = claps.length > 50 ? 50 : claps.length;
       for(var i = 0 ; i < clapLoad; i++) {
-        console.log("emitting tweet");
         hub.emit("new clap", claps[i]);
       }
       mapLoaded = true;
@@ -147,12 +139,7 @@
 
   $('#toMap').click(function() {
     $("#clapContainer").fadeOut("slow", function() {
-      if (!mapLoaded) {
-        hub.emit("load main map");
-      }
-      else {
-        $("#mapContainer").fadeIn("slow");
-      }
+      $("#mapContainer").fadeIn("slow");
     });
   });
 

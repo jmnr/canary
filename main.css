@@ -98,6 +98,7 @@ textarea {
   border: 1px solid #101010;
   color: white;
   font-size: 14px;
+  height: 40px;
 }
 
 .inputButtons:hover {
@@ -108,6 +109,7 @@ textarea {
 
 #locationButtonOne {
   display:inline-block;
+  margin-bottom: 10px;
   width: 150px;
 }
 
@@ -116,11 +118,17 @@ textarea {
   width: 150px;
 }
 
+#clearUsernameButton {
+  margin-bottom: 10px;
+  width: 170px;
+}
+
 #submitButton {
   background: #ffff00;
   border: 1px solid #101010;
   color: black;
   font-size: 14px;
+  height: 40px;
   width: 100px;
 }
 
@@ -142,6 +150,7 @@ textarea {
   color: white;
   display: inline-block;
   font-size: 14px;
+  height: 30px;
   width: 100px;
 }
 
@@ -149,6 +158,11 @@ textarea {
   background: #ffff00;
   color: black;
   cursor:pointer;
+}
+
+#toFeed {
+  background: #ffff7e;
+  color: black;
 }
 
 /*carousel content*/

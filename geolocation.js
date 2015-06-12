@@ -1,10 +1,9 @@
+
 var geolatitude, geolongitude;
 
 (function geolocation() {
 
   var map= {};
-  var latitude;
-  var longitude;
 
 hub.listen("page loaded", function() {
       if (navigator.geolocation) {
@@ -12,6 +11,7 @@ hub.listen("page loaded", function() {
           // hub.emit("coords recieved", position.coords);
           geolatitude = position.coords.latitude;
           geolongitude = position.coords.longitude;
+          hub.emit("load main map");
         });
       }
 });
@@ -28,8 +28,7 @@ hub.listen("load main map", function() {
 });
 
 hub.listen("new clap", function (tweet) {
-    console.log("tweet", tweet);
-      var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
+  var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
 });
 
 // hub.listen("coords needed", function () {

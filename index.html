@@ -26,7 +26,7 @@
           <input id="usernameInput" type="text" name="username" size="20" placeholder="<h1>username</h1>">
           <button id="submitUsername">START</button>
           <!-- <div id="denyUsernameDiv"> -->
-          <p id="denyUsername">Or continue as guest...</p>
+          <p id="denyUsername">Or post anonymously...</p>
           <!-- </div> -->
         </div>
 
@@ -35,23 +35,21 @@
           <div id="inputMap"></div>
 
           <div>
-            <!-- <button id="locationButtonOne" class="inputButtons" onclick="clickLocationButton(1)">ADD LOCATION</button>
-            <button id="locationButtonTwo" class="inputButtons" onclick="clickLocationButton(2)">ADD LOCATION</button> -->
+            <button id="clearUsernameButton" class="inputButtons">CHANGE USERNAME</button>
             <button id="submitButton">BRAG</button>
-            <button id="clearUsernameButton">Clear Username</button>
           </div>
         </div>
 
       </div>
 
       <div id="tabControlsDiv">
-        <button id="toFeed" class="tabButtons">FEED</button>
-        <button id="toMap" class="tabButtons">MAP</button>
+        <button id="toFeed" class="tabButtons" onclick="toggleSlide(1)">FEED</button>
+        <button id="toMap" class="tabButtons" onclick="toggleSlide(0)">MAP</button>
       </div>
-
       <div id="clapContent">
         <div id="clapContainer" class="tabs">
-          <div id="claps"></div>
+          <div id="claps">
+          </div>
         </div>
         <div id="mapContainer" class="tabs">
         </div>
