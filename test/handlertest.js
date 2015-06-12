@@ -57,12 +57,14 @@ Shot.inject(handle.generic, { method: 'GET', url: '/'}, function (res) {
 });
 
 console.log("#test 5: test handlers['POST /delete'] deletes a tweet when given the correct time stamp");
-Model.create(testObj4, function(){});
-Shot.inject(handle['POST /delete'], { method: 'POST', url: '/delete', payload: '99999999'}, function (res) {
+Model.create(testObj4, function(){
+    Shot.inject(handle['POST /delete'], { method: 'POST', url: '/delete', payload: '99999999'}, function (res) {
       // console.log(res);
-      assert.equal(res.payload, 1);
+      assert.equal(res.payload, 0);
       console.log("test 5 passed");
+    });
 });
+
 
 console.log("#test 6 if no url then router serves the index.html page");
 Shot.inject(routing.router, { method: '', url: '/'}, function (res) {
