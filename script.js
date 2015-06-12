@@ -10,7 +10,9 @@
   $(document).ready(function () {
     $("#usernameContainer").hide();
     $("#newClap").hide();
-    
+    $("#clapContainer").hide();
+    $("#mapContainer").hide();
+
     if(needsUsername()) {
       $("#usernameContainer").fadeIn("slow");
     } else {
@@ -43,15 +45,15 @@
   window.onload = loadAllClaps();//geolocation.initialize(loadAllClaps);
 
   $('#submitButton').click(function() {
-    var clapData = {};
-    clapData.userId = document.cookie.split("userId=").pop().split(";").shift();
-    clapData.username = document.cookie.split("username=").pop().split(";").shift();
-    clapData.message = $('#newClapInput').val();
-    clapData.lat = geolocation.lat;
-    clapData.lon = geolocation.lon;
+    var clapData = {
+      userId: document.cookie.split("userId=").pop().split(";").shift(),
+      username: document.cookie.split("username=").pop().split(";").shift(),
+      message: $('#newClapInput').val(),
+      lat: geolocation.lat,
+      lon: geolocation.lon
+    };
 
     if(clapData.message.length > 0) {
-
       $.post( '/addClap', JSON.stringify(clapData), function(data) {
         var newClap = JSON.parse(data);
         socket.emit('new clap', data);
@@ -79,7 +81,7 @@
     } else { 
       document.cookie = "username=" + usernameText + ";";
       $("#usernameContainer").fadeOut("slow", function() {
-        $("#usernameContainer").remove();
+        $('#usernameInput').val('');
         $("#newClap").fadeIn("slow");
       });
     }
@@ -88,7 +90,6 @@
   $('#denyUsername').click(function() {
     document.cookie = "username=###";
     $("#usernameContainer").fadeOut("slow", function() {
-        $("#usernameContainer").remove();
         $("#newClap").fadeIn("slow");
     });
   });
@@ -107,10 +108,32 @@
     }
   });
 
+  $('#clearUsernameButton').click(function() {
+    document.cookie = "username=###";
+    username = "###";
+    $("#newClap").fadeOut("slow", function() {
+      $("#usernameContainer").fadeIn("slow");
+    });
+  });
+
+  $('#toFeed').click(function() {
+    $("#mapContainer").fadeOut("slow", function() {
+      $("#clapContainer").fadeIn("slow");
+    });
+  });
+
+  $('#toMap').click(function() {
+    $("#clapContainer").fadeOut("slow", function() {
+      $("#mapContainer").fadeIn("slow");
+    });
+  });
+
   $('body').on('click','.hashClick', function() {
     var tag = $(this).text();
+
     if(currentHash === tag) {
       $("#claps").fadeOut("slow", function() {
+        currentHash = false;
         serverGrab();
       });
     } else {
@@ -136,6 +159,10 @@
   });
 
   $('body').on('click','.delButtons', function() {
+    // var deleteObj = {
+    //   clapId: $(this).parent().attr("id"),
+    //   userId: userId
+    // };
     var clapId = $(this).parent().attr("id");
     $.post('/delete', clapId, function() {
       socket.emit('delete clap', clapId);
