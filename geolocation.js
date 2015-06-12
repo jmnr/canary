@@ -1,21 +1,23 @@
+  var geolatitude;
+  var geolongitude;
+
 (function geolocation() {
 
   var map= {};
-  var latitude;
-  var longitude;
 
 hub.listen("page loaded", function() {
-      if (navigator.geolocation) {
-        var position  = navigator.geolocation.getCurrentPosition(function(position) {
-          // hub.emit("coords recieved", position.coords);
-          geolocation.latitude = position.coords.latitude;
-          geolocation.longitude = position.coords.longitude;
-        });
-      }
+  if (navigator.geolocation) {
+    var position  = navigator.geolocation.getCurrentPosition(function(position) {
+      // hub.emit("coords recieved", position.coords);
+      geolatitude = position.coords.latitude;
+      geolongitude = position.coords.longitude;
+      hub.emit("load main map");
+    });
+  }
 });
 
 hub.listen("load main map", function() {
-      geolocation.map = L.map(('mapContainer')).setView([geolocation.latitude, geolocation.longitude], 18);
+      geolocation.map = L.map(('mapContainer')).setView([geolatitude, geolongitude], 18);
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
           maxZoom: 15,
@@ -26,8 +28,7 @@ hub.listen("load main map", function() {
 });
 
 hub.listen("new clap", function (tweet) {
-    console.log("tweet", tweet);
-      var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
+  var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
 });
 
 hub.listen("coords needed", function () {
