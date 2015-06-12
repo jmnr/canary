@@ -1,40 +1,29 @@
 (function(){
   "use strict";
 
+  var currentHash;
   var userId;
   var username;
   var socket;
+  var markerCoords;
 
   $(document).ready(function () {
-    // $("#usernameContainer").hide();
+    $("#usernameContainer").hide();
   });
-
 
   var loadAllClaps = function() {
 
     socket = io();
-    var markerCoords = [];
+    markerCoords = [];
 
     cookieCheck(); //if they have no username, add null and if they have no userId, add one
 
     if(needsUsername()) {
+      $("#newClap").hide();
       $("#usernameContainer").fadeIn("slow");
     }
 
-    $.get('/allClaps', function(data) {
-      console.log("gonna sort");
-      var claps = JSON.parse(data).sort(sortClaps);
-      var accessDOM = '';
-      var clapLoad = claps.length > 50 ? 50 : claps.length;
-      for(var i = 0 ; i < clapLoad; i++) {
-        markerCoords.push(claps[i]);
-        geolocation.addMarker(claps[i], geolocation.map);
-        accessDOM += addClap(claps[i]);
-      }
-      $("#claps").prepend(accessDOM);
-      // console.log(markerCoords);
-      // geolocation.addAllMarkers(markerCoords);
-    });
+    serverGrab();
 
     socket.on('new clap', function(data){ //socket listener
       data = JSON.parse(data);
@@ -49,7 +38,7 @@
     });
   };
 
-  window.onload = geolocation.initialize(loadAllClaps);
+  window.onload = loadAllClaps();//geolocation.initialize(loadAllClaps);
 
   $('#submitButton').click(function() {
     var clapData = {};
@@ -79,18 +68,19 @@
     if(usernameText.length < 1) {
       alert("Please enter a username");
       return;
-    }
 
-    if(!usernameText.match(/^[a-z0-9]+$/i)) {
+    } else if (!usernameText.match(/^[a-z0-9]+$/i)) {
       alert("Alphanum only please");
       $('#usernameInput').val('');
       return;
-    }
 
-    document.cookie = "username=" + usernameText + ";";
-    $("#usernameContainer").fadeOut("slow", function() {
+    } else { 
+      document.cookie = "username=" + usernameText + ";";
+      $("#usernameContainer").fadeOut("slow", function() {
         $("#usernameContainer").remove();
-    });
+      });
+      switchToClapInput();
+    }
   });
 
   $('#denyUsername').click(function() {
@@ -98,6 +88,7 @@
     $("#usernameContainer").fadeOut("slow", function() {
         $("#usernameContainer").remove();
     });
+    switchToClapInput();
   });
 
   $('#newClapInput').keypress(function(e){
@@ -115,7 +106,31 @@
   });
 
   $('body').on('click','.hashClick', function() {
-    console.log($(this).text());
+    var tag = $(this).text();
+    if(currentHash === tag) {
+      $("#claps").fadeOut("slow", function() {
+        serverGrab();
+      });
+    } else {
+      $.get('/allClaps', function(data) {
+        currentHash = tag;
+        var claps = JSON.parse(data).filter(function(x) {return x.message.indexOf(tag) >-1;});
+        claps = claps.sort(sortClaps);
+        var accessDOM = '';
+        var clapLoad = claps.length > 50 ? 50 : claps.length;
+        for(var i = 0 ; i < clapLoad; i++) {
+          markerCoords.push(claps[i]);
+          // geolocation.addMarker(claps[i], geolocation.map);
+          accessDOM += addClap(claps[i]);
+        }
+        $("#claps").fadeOut("slow", function() {
+          $("#claps").html(accessDOM);
+          $("#claps").fadeIn("slow");
+        });
+        // console.log(markerCoords);
+        // geolocation.addAllMarkers(markerCoords);
+      });
+    }
   });
 
   $('body').on('click','.delButtons', function() {
