@@ -37,7 +37,7 @@ body {
 }
 
 #newClap {
-  display: none;
+  display: block;
   margin-bottom: 30px;
   text-align: center;
 }
