@@ -15,17 +15,18 @@
       <!-- <div id="qunit"></div>
       <div id="qunit-fixture"></div> -->
 
-      <div id="header"><img src="https://dl.dropboxusercontent.com/u/297682547/CANAREE%20(4).png"></div>
-
+      <div id="header">
+        <img src="images/canaryBanner.png">
+      </div>
 
       <div id="addContainer">
 
         <div id="usernameContainer" class="inputContainers">
           <!-- <textarea id="usernameInput" maxlength="20"></textarea> -->
           <input id="usernameInput" type="text" name="username" size="20" placeholder="<h1>username</h1>">
-          <button id="submitUsername" value="Submit" onclick="switchToClapInput()">START</button>
+          <button id="submitUsername">START</button>
           <!-- <div id="denyUsernameDiv"> -->
-            <p id="denyUsername" value="Submit" onclick="switchToClapInput()">Or continue as guest...</p>
+          <p id="denyUsername">Or continue as guest...</p>
           <!-- </div> -->
         </div>
 
@@ -34,17 +35,18 @@
           <div id="inputMap"></div>
 
           <div>
-            <button id="locationButtonOne" class="inputButtons" value="Add Location" onclick="clickLocationButton(1)">ADD LOCATION</button>
-            <button id="locationButtonTwo" class="inputButtons" value="Add Location" onclick="clickLocationButton(2)">ADD LOCATION</button>
-            <button id="submitButton" value="Submit">BRAG</button>
+            <button id="locationButtonOne" class="inputButtons" onclick="clickLocationButton(1)">ADD LOCATION</button>
+            <button id="locationButtonTwo" class="inputButtons" onclick="clickLocationButton(2)">ADD LOCATION</button>
+            <button id="submitButton">BRAG</button>
+            <button id="clearUsernameButton">Clear Username</button>
           </div>
         </div>
 
       </div>
 
       <div id="tabControlsDiv">
-        <button id="toFeed" class="tabButtons" value="FEED" onclick="toggleSlide(1)">FEED</button>
-        <button id="toMap" class="tabButtons" value="MAP" onclick="toggleSlide(0)">MAP</button>
+        <button id="toFeed" class="tabButtons">FEED</button>
+        <button id="toMap" class="tabButtons">MAP</button>
       </div>
 
       <div id="clapContent">
