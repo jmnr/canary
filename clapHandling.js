@@ -1,8 +1,22 @@
 var hashtags = function (text) {
   return text.replace( new RegExp(/#\w+/g),
     function myFunction (x) {
-      return "<a class='hashClick' href='#'>" + x + "</a>";
+      return "<a class='hashClick' href='#!'>" + x + "</a>";
     });
+};
+
+var serverGrab = function(mapName) {
+  $.get('/allClaps', function(data) {
+    var claps = JSON.parse(data).sort(sortClaps);
+    var accessDOM = '';
+    var clapLoad = claps.length > 50 ? 50 : claps.length;
+    for(var i = 0 ; i < clapLoad; i++) {
+      accessDOM += addClap(claps[i]);
+    }
+    $("#claps").html(accessDOM);
+    $("#claps").fadeIn("slow");
+
+  });
 };
 
 var timeParser = function (time) {
@@ -10,7 +24,6 @@ var timeParser = function (time) {
 };
 
 var addClap = function (data) {
-  // console.log(data.userId, userId);
   if(data.message.indexOf("#") > -1) {
     data.message = hashtags(data.message);
   }
@@ -18,8 +31,8 @@ var addClap = function (data) {
   var out = '<div id="' + data.time + '" class="clap">' +
     '<p>' + data.message + '</p>';
 
-  out += username !== "###" ? '<p>by ' + data.username + '</p>' : '';
-  out += userId === data.userId ? '<button class="delButtons">x</button>' : '';
+  out += data.username !== "###" ? '<p>by ' + data.username + '</p>' : '';
+  out += data.userId === userId ? '<button class="delButtons">x</button>' : '';
 
   return out + '<p>posted on ' + timeParser(new Date(Number(data.time))) + '</p>' + '</div>';
 };

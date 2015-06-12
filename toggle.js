@@ -1,4 +1,4 @@
-function switchToClapInput (num) {
+function switchToClapInput (num) { //been replaced
   var elements = document.getElementsByClassName("inputContainers");
   elements[0].style.display = "none";
   elements[1].style.display = "block";

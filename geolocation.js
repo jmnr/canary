@@ -7,37 +7,27 @@
 hub.listen("page loaded", function() {
       if (navigator.geolocation) {
         var position  = navigator.geolocation.getCurrentPosition(function(position) {
-          hub.emit("coords recieved", position.coords);
+          // hub.emit("coords recieved", position.coords);
+          geolocation.latitude = position.coords.latitude;
+          geolocation.longitude = position.coords.longitude;
         });
       }
 });
 
-hub.listen("coords recieved", function(coords) {
-      geolocation.latitude = coords.latitude;
-      geolocation.longitude = coords.longitude;
-      // console.log("lat:", geolocation.latitude);
-      // console.log("long:", geolocation.longitude);
-      geolocation.map = L.map('mapContainer').setView([geolocation.latitude, geolocation.longitude], 15);
-      geolocation.mapinput = L.map('inputMap').setView([geolocation.latitude, geolocation.longitude], 15);
+hub.listen("load main map", function() {
+      geolocation.map = L.map(('mapContainer')).setView([geolocation.latitude, geolocation.longitude], 18);
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-          maxZoom: 18,
+          maxZoom: 15,
           id: 'msmichellegar.cc37dd7d',
           accessToken: 'pk.eyJ1IjoibXNtaWNoZWxsZWdhciIsImEiOiIxZTQyNTY3Y2VmYWIxYzc4NWE2MTk0NGExZGM4MzhmZSJ9.NU0hj0msBW3p9kGKm8Jylw'
       }).addTo(geolocation.map);
-      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-          maxZoom: 18,
-          id: 'msmichellegar.cc37dd7d',
-          accessToken: 'pk.eyJ1IjoibXNtaWNoZWxsZWdhciIsImEiOiIxZTQyNTY3Y2VmYWIxYzc4NWE2MTk0NGExZGM4MzhmZSJ9.NU0hj0msBW3p9kGKm8Jylw'
-      }).addTo(geolocation.mapinput);
-      hub.emit("new clap", {lat: geolocation.latitude, lon: geolocation.longitude}, geolocation.mapinput, {clickable: true, draggable: true});
-      // geolocation.addMarker();
-      hub.emit("main map loaded", geolocation.map);
+      hub.emit("main map loaded");
 });
 
-hub.listen("new clap", function (tweet, map, options) {
-      var marker = tweet.message ? new L.marker([tweet.lat, tweet.lon],options).addTo(map) : new L.marker([tweet.lat, tweet.lon],options).addTo(map).bindPopup(tweet.message).openPopup;
+hub.listen("new clap", function (tweet) {
+    console.log("tweet", tweet);
+      var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
 });
 
 hub.listen("coords needed", function () {

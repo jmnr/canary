@@ -35,12 +35,12 @@ function handlers(config) {
     },
 
     'POST /delete': function(req, res) {
-      var time;
+      var clapId;
       req.on('data', function(chunk) {
-        time = chunk + ''; //turns clap input box buffer into text
+        clapId = chunk + ''; //turns clap input box buffer into text
       });
       req.on('end', function() {
-        Model.delete(time, function(reply){
+        Model.delete(clapId, function(reply){
           res.end(reply.toString());
         });
       });
