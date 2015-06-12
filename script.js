@@ -9,6 +9,13 @@
 
   $(document).ready(function () {
     $("#usernameContainer").hide();
+    $("#newClap").hide();
+    
+    if(needsUsername()) {
+      $("#usernameContainer").fadeIn("slow");
+    } else {
+      $("#newClap").fadeIn("slow");
+    }
   });
 
   var loadAllClaps = function() {
@@ -17,11 +24,6 @@
     markerCoords = [];
 
     cookieCheck(); //if they have no username, add null and if they have no userId, add one
-
-    if(needsUsername()) {
-      $("#newClap").hide();
-      $("#usernameContainer").fadeIn("slow");
-    }
 
     serverGrab();
 
@@ -78,8 +80,8 @@
       document.cookie = "username=" + usernameText + ";";
       $("#usernameContainer").fadeOut("slow", function() {
         $("#usernameContainer").remove();
+        $("#newClap").fadeIn("slow");
       });
-      switchToClapInput();
     }
   });
 
@@ -87,8 +89,8 @@
     document.cookie = "username=###";
     $("#usernameContainer").fadeOut("slow", function() {
         $("#usernameContainer").remove();
+        $("#newClap").fadeIn("slow");
     });
-    switchToClapInput();
   });
 
   $('#newClapInput').keypress(function(e){
