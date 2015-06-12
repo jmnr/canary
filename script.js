@@ -33,7 +33,7 @@
       data = JSON.parse(data);
       var clapAdd = $(addClap(data));
       clapAdd.hide().prependTo("#claps").fadeIn("slow");
-      // hub.emit("new clap", data, mapName);
+      hub.emit("new clap", data);
     });
 
     socket.on('delete clap', function(clapId){ //socket listener
@@ -57,7 +57,7 @@
         $.post( '/addClap', JSON.stringify(clapData), function(data) {
           var newClap = JSON.parse(data);
           socket.emit('new clap', data);
-          // hub.emit("new clap", data, mapName);
+          hub.emit("new clap", newClap);
         });
 
         $('#newClapInput').val('');
@@ -66,6 +66,7 @@
         alert("Provide your egotistical ramblings in the text box.");
       }
   });
+
 
   //// map load listener
   hub.listen("main map loaded", function() {
