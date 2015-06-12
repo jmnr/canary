@@ -65,7 +65,7 @@ var addCookie = function() {
 var needsUsername = function () {
   var check = document.cookie;
   return (check.indexOf("username=") < 0 || //check if a username cookie doesn't exist
-    check.split("username=").pop().split(";").shift() === "###"); //or is our null placeholder
+    check.split("username=").pop().split(";").shift() === "anonymous"); //or is our null placeholder
 };
 
 var cookieCheck = function() {
