@@ -19,10 +19,22 @@ var geolocation = {
     console.log("long:", geolocation.lon);
     geolocation.map = L.map('mapContainer').setView([geolocation.lat, geolocation.lon], 15);
     geolocation.mapinput = L.map('inputMap').setView([geolocation.lat, geolocation.lon], 15);
-    var layer = new L.StamenTileLayer("toner-lite");
-    var layer2 = new L.StamenTileLayer("toner-lite");
-    geolocation.map.addLayer(layer);
-    geolocation.mapinput.addLayer(layer2);
+    // var layer = new L.StamenTileLayer("toner-lite");
+    // var layer2 = new L.StamenTileLayer("toner-lite");
+    // geolocation.map.addLayer(layer);
+    // geolocation.mapinput.addLayer(layer2);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'msmichellegar.cc37dd7d',
+        accessToken: 'pk.eyJ1IjoibXNtaWNoZWxsZWdhciIsImEiOiIxZTQyNTY3Y2VmYWIxYzc4NWE2MTk0NGExZGM4MzhmZSJ9.NU0hj0msBW3p9kGKm8Jylw'
+    }).addTo(geolocation.map);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'msmichellegar.cc37dd7d',
+        accessToken: 'pk.eyJ1IjoibXNtaWNoZWxsZWdhciIsImEiOiIxZTQyNTY3Y2VmYWIxYzc4NWE2MTk0NGExZGM4MzhmZSJ9.NU0hj0msBW3p9kGKm8Jylw'
+    }).addTo(geolocation.mapinput);
     geolocation.addMarker(geolocation, geolocation.mapinput, {clickable: true, draggable: true});
     geolocation.callback();
   },

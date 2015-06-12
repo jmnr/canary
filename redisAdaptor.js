@@ -1,6 +1,6 @@
 var redisAdaptor = function (config) {
   "use strict";
-  console.log("config", config);
+
   var redis = config.connection;
   var client;
 
