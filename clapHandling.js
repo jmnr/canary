@@ -37,7 +37,7 @@ var addClap = function (data) {
   out += data.username !== "anonymous" ? '<p>var name = ' + data.username + '</p>' : '';
   out += data.userId === userId ? '<button class="delButtons">x</button>' : '';
 
-  return out + '<p>posted on ' + timeParser(new Date(Number(data.time))) + '</p>' + '</div>';
+  return out + '<p>var datePosted = ' + timeParser(new Date(Number(data.time))) + '</p>' + '</div>';
 };
 
 var sortClaps = function (a, b) {
