@@ -34,7 +34,7 @@ var addClap = function (data) {
   var out = '<div id="' + data.time + '" class="clap">' +
     '<p>' + data.message + '</p>';
 
-  out += data.username !== "###" ? '<p>by ' + data.username + '</p>' : '';
+  out += data.username !== "anonymous" ? '<p>var name = ' + data.username + '</p>' : '';
   out += data.userId === userId ? '<button class="delButtons">x</button>' : '';
 
   return out + '<p>posted on ' + timeParser(new Date(Number(data.time))) + '</p>' + '</div>';
@@ -71,7 +71,7 @@ var needsUsername = function () {
 var cookieCheck = function() {
   var check = document.cookie;
   if(check.indexOf("username=") < 0) {
-    document.cookie = "username=###";
+    document.cookie = "username=anonymous";
   }
   if(check.indexOf("userId=") < 0) {
     document.cookie = addCookie();
