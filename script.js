@@ -19,6 +19,22 @@
     }
   });
 
+  $("#locationButtonOne").click(function() {
+    $("#submitButton").hide();
+    $("#locationButtonOne").hide();
+    $("#locationButtonTwo").fadeIn();
+    $("#inputMap").fadeIn();
+    $("#clearUsernameButton").hide();
+  });
+
+  $("#locationButtonTwo").click(function() {
+    $("#submitButton").fadeIn();
+    $("#locationButtonOne").fadeIn();
+    $("#locationButtonTwo").hide();
+    $("#inputMap").hide();
+    $("#clearUsernameButton").fadeIn();
+  });
+
   var loadAllClaps = function() {
 
     socket = io();
@@ -77,7 +93,7 @@
       $('#usernameInput').val('');
       return;
 
-    } else { 
+    } else {
       document.cookie = "username=" + usernameText + ";";
       $("#usernameContainer").fadeOut("slow", function() {
         $('#usernameInput').val('');
