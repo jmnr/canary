@@ -116,6 +116,10 @@ textarea {
   width: 150px;
 }
 
+#clearUsernameButton {
+  width: 170px;
+}
+
 #submitButton {
   background: #ffff00;
   border: 1px solid #101010;
