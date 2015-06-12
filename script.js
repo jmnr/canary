@@ -10,7 +10,6 @@
   $(document).ready(function () {
     $("#usernameContainer").hide();
     $("#newClap").hide();
-    $("#clapContainer").hide();
     $("#mapContainer").hide();
 
     if(needsUsername()) {
