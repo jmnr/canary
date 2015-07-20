@@ -2,7 +2,8 @@ var hashtags = function (text) {
   return text.replace( new RegExp(/#\w+/g),
     function myFunction (x) {
       return "<a class='hashClick' href='#!'>" + x + "</a>";
-    });
+    }
+  );
 };
 
 var serverGrab = function(mapName) {
@@ -31,7 +32,7 @@ var addClap = function (data) {
   var out = '<div id="' + data.time + '" class="clap">' +
     '<p>' + data.message + '</p>';
 
-  out += data.username !== "anonymous" ? '<p><b>var</b> <i>name</i> = "' + data.username + '";</p>' : '';
+  out += data.username !== "###" ? '<p><b>var</b> <i>name</i> = "' + data.username + '";</p>' : '';
   out += data.userId === userId ? '<button class="delButtons">x</button></br></br>' : '';
   return out + timeParser(new Date(Number(data.time))) + '</p>' + '</div>';
 

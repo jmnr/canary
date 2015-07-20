@@ -4,9 +4,9 @@ var redisAdaptor = function (config) {
   var redis = config.connection;
   var client;
 
-  if (process.env.REDISCLOUD_URL) {
+  if (process.env.REDIS_URL) {
     var url = require('url');
-    var redisURL = url.parse(process.env.REDISCLOUD_URL);
+    var redisURL = url.parse(process.env.REDIS_URL);
     client = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
     client.auth(redisURL.auth.split(":")[1]);
   }
