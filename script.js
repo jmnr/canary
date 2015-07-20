@@ -11,8 +11,8 @@
   $(document).ready(function () {
     $("#usernameContainer").hide();
     $("#newClap").hide();
-    $("#clapContainer").hide();
-    // $("#mapContainer").hide();
+    // $("#clapContainer").hide();
+    $("#mapContainer").hide();
 
     if(needsUsername()) {
       $("#usernameContainer").fadeIn("slow");
@@ -22,7 +22,7 @@
   });
 
   window.onload = function () {
-    hub.emit("page loaded", null);
+
     socket = io();
 
     cookieCheck(); //if they have no username, add null and if they have no userId, add one
@@ -139,6 +139,7 @@
 
   $('#toMap').click(function() {
     $("#clapContainer").fadeOut("slow", function() {
+      hub.emit("page loaded", null);
       $("#mapContainer").fadeIn("slow");
     });
   });

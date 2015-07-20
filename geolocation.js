@@ -1,35 +1,35 @@
 
 var geolatitude, geolongitude;
 
-(function geolocation() {
+// (function geolocation() {
 
   var map= {};
 
-hub.listen("page loaded", function() {
-      if (navigator.geolocation) {
-        var position  = navigator.geolocation.getCurrentPosition(function(position) {
-          // hub.emit("coords recieved", position.coords);
-          geolatitude = position.coords.latitude;
-          geolongitude = position.coords.longitude;
-          hub.emit("load main map");
-        });
-      }
-});
+  hub.listen("page loaded", function() {
+    if (navigator.geolocation) {
+      var position  = navigator.geolocation.getCurrentPosition(function(position) {
+        // hub.emit("coords recieved", position.coords);
+        geolatitude = position.coords.latitude;
+        geolongitude = position.coords.longitude;
+        hub.emit("load main map");
+      });
+    }
+  });
 
-hub.listen("load main map", function() {
-      geolocation.map = L.map(('mapContainer')).setView([geolatitude, geolongitude], 13);
-      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-          maxZoom: 15,
-          id: 'msmichellegar.cc37dd7d',
-          accessToken: 'pk.eyJ1IjoibXNtaWNoZWxsZWdhciIsImEiOiIxZTQyNTY3Y2VmYWIxYzc4NWE2MTk0NGExZGM4MzhmZSJ9.NU0hj0msBW3p9kGKm8Jylw'
-      }).addTo(geolocation.map);
-      hub.emit("main map loaded");
-});
+  hub.listen("load main map", function() {
+    map = L.map(('mapContainer')).setView([geolatitude, geolongitude], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 15,
+      id: 'msmichellegar.cc37dd7d',
+      accessToken: 'pk.eyJ1IjoibXNtaWNoZWxsZWdhciIsImEiOiIxZTQyNTY3Y2VmYWIxYzc4NWE2MTk0NGExZGM4MzhmZSJ9.NU0hj0msBW3p9kGKm8Jylw'
+    }).addTo(map);
+    hub.emit("main map loaded");
+  });
 
-hub.listen("new clap", function (tweet) {
-  var marker = new L.marker([tweet.lat, tweet.lon]).addTo(geolocation.map).bindPopup(tweet.message).openPopup;
-});
+  hub.listen("new clap", function (tweet) {
+    var marker = new L.marker([tweet.lat, tweet.lon]).addTo(map).bindPopup(tweet.message).openPopup;
+  });
 
 // hub.listen("coords needed", function () {
 //     hub.emit("coords sent", geolocation.latitude, geolocation.longitude);
@@ -65,4 +65,4 @@ hub.listen("new clap", function (tweet) {
   //   }
   // };
 
-}());
+// }());
